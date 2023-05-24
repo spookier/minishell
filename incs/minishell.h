@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/24 18:03:25 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/24 20:41:23 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 # define STDOUT			1
 # define STDERR			2
 
+# define NONE			10
+# define IN			11
+# define OUT			12
+# define HEREDOC		13
+# define APPEND			14
+
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
@@ -36,6 +42,29 @@
 # include <sys/errno.h>
 # include <limits.h>
 # include "../libft/incs/libft.h"
+
+typedef struct s_redir
+{
+	int		operation_flag;
+	char		*file_name;
+}	t_redir;
+
+typedef struct s_data
+{
+	char		*command;
+	char		**option;
+	t_redir		**redir;
+	int			pid;
+	int			exit;
+}	t_data;
+
+typedef struct s_env
+{
+	char		*key;
+	char		*value;
+}	t_env;
+
+extern int	g_exit_code;
 
 /* main.c */
 void	minishell_header(void);
