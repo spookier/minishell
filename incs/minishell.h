@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/24 20:51:35 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/25 00:09:14 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ extern int	g_exit_code;
 /* main.c */
 void	minishell_header(void);
 int	minishell_main(char **env);
+int	check_valid_input(char *str);
 int	main(int argc, char **argv, char **env);
 
 /* signal.c */
@@ -70,6 +71,8 @@ void	signal_handler(int signo);
 void	signal_detect(void);
 
 /* utils.c */
+void	*ft_realloc(void *old_ptr, size_t old_len, size_t new_len);
 void	free_2d_arr(char **arr);
+void	free_cmd(t_data **cmd);
 
 #endif
