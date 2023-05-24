@@ -75,5 +75,7 @@ int	main(int argc, char **argv, char **env);
 void	signal_handler(int signo);
 void	ft_signal(void);
 
+/* builting.c */
+int run_command(t_data *data, char *command, char **options);
 
 #endif
