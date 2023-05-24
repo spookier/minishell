@@ -6,7 +6,7 @@
 #    By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/22 18:37:38 by yhwang            #+#    #+#              #
-#    Updated: 2022/06/24 23:16:30 by yhwang           ###   ########.fr        #
+#    Updated: 2023/05/24 17:02:01 by yhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ LIBFT_OBJS = $(addprefix $(LIBFT_DIR)/, $(addsuffix .o, $(LIBFT)))
 FT_PRINTF_OBJS = $(addprefix $(FT_PRINTF_DIR)/, $(addsuffix .o, $(FT_PRINTF)))
 GNL_OBJS = $(addprefix $(GNL_DIR)/, $(addsuffix .o, $(GNL)))
 
-.c.o: $(LIBFT_SRCS) $(FT_PRINTF_SRCS) $(GNL_SRCS) $(INCS_DIR)
+%.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@ -I$(INCS_DIR)
 
 $(NAME): $(LIBFT_OBJS) $(FT_PRINTF_OBJS) $(GNL_OBJS)
@@ -91,7 +91,7 @@ $(NAME): $(LIBFT_OBJS) $(FT_PRINTF_OBJS) $(GNL_OBJS)
 all: $(NAME)
 
 clean:
-	$(RM) $(LIBFT_OBJS) $(FT_PRINTF_OBJS) $(GNL_OBJS)
+	@$(RM) $(LIBFT_OBJS) $(FT_PRINTF_OBJS) $(GNL_OBJS)
 
 fclean: clean
 	$(RM) $(NAME)
