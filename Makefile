@@ -6,7 +6,7 @@
 #    By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:50:04 by yhwang            #+#    #+#              #
-#    Updated: 2023/05/24 20:50:31 by yhwang           ###   ########.fr        #
+#    Updated: 2023/05/24 20:57:20 by yhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ LIBFT = $(addprefix $(LIBFT_DIR)/, $(LIBFT_NAME))
 
 FILES =	main \
 		signal \
-		free
+		utils
 
 INCS_DIR = ./incs
 
