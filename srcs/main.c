@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/24 18:04:41 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/24 20:38:21 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	minishell_main(char **env)
 		if (check_valid_input(rdline))
 		{
 			add_history(rdline);
-			printf("%s\n", rdline);
+			printf("%s\n", rdline);//
 		}
 		free(rdline);
 	}
