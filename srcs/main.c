@@ -27,6 +27,21 @@ void	minishell_header(void)
 	printf("%s\n", BLACK);
 }
 
+void	minishell_header(void)
+{
+	printf("%s\n", YELLOW);
+	printf("╔════╦════╦══╦════════╦══╦═══════╦══╗  ╔══╦═══════╦══╗  ╔══╗   \n");
+	printf("║    ║    ║  ║        ║  ║       ║  ║  ║  ║       ║  ║  ║  ║   \n");
+	printf("║    ║    ║  ║  ╔══╗  ║  ║   ════╣  ╚══╝  ║   ════╣  ║  ║  ║   \n");
+	printf("║  ║ ║ ║  ║  ║  ║  ║  ║  ║       ║        ║       ║  ║  ║  ║   \n");
+	printf("║  ║ ║ ║  ║  ║  ║  ║  ║  ╠════   ║  ╔══╗  ║   ════╣  ╚══╣  ╚══╗\n");
+	printf("║  ║   ║  ║  ║  ║  ║  ║  ║       ║  ║  ║  ║       ║     ║     ║\n");
+	printf("╚══╩═══╩══╩══╩══╝  ╚══╩══╩═══════╩══╝  ╚══╩═══════╩═════╩═════╝\n");
+	printf("                                                               \n");
+	printf("                                      by. acostin, yhwang 🐣🐥 \n");
+	printf("%s\n", BLACK);
+}
+
 int	minishell_main(char **env)
 {
 	char	*rdline;
