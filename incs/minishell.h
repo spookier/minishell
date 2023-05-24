@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/24 20:41:23 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/24 20:51:35 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,6 @@ typedef struct s_data
 	int			exit;
 }	t_data;
 
-typedef struct s_env
-{
-	char		*key;
-	char		*value;
-}	t_env;
-
 extern int	g_exit_code;
 
 /* main.c */
@@ -73,7 +67,9 @@ int	main(int argc, char **argv, char **env);
 
 /* signal.c */
 void	signal_handler(int signo);
-void	ft_signal(void);
+void	signal_detect(void);
 
+/* utils.c */
+void	free_2d_arr(char **arr);
 
 #endif
