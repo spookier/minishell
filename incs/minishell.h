@@ -18,9 +18,20 @@
 # define CYAN			"\x1b[36m"
 # define YELLOW			"\x1b[33m"
 
+#include "../libft/incs/libft.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+
+typedef struct s_Error
+{
+	char *error_str;
+	
+} t_Error;
+
+char **parse_rdline(char	*str, t_Error *error);
+
 
 #endif
