@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/24 16:18:39 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/24 18:04:41 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ void	minishell_header(void)
 	printf("%s\n", BLACK);
 }
 
+int	check_valid_input(char *str)
+{
+	if (str == NULL)
+	{
+		printf("exit\n");
+		exit(0);
+	}
+	return (1);
+}
+
 int	minishell_main(char **env)
 {
 	char	*rdline;
@@ -34,12 +44,13 @@ int	minishell_main(char **env)
 	minishell_header();
 	while (1)
 	{
-		//ft_signal();
-		printf("%s", CYAN);
+		ft_signal();
 		rdline = readline("minishell$ ");
-		printf("%s", BLACK);
-		add_history(rdline);
-		printf("%s\n", rdline);
+		if (check_valid_input(rdline))
+		{
+			add_history(rdline);
+			printf("%s\n", rdline);
+		}
 		free(rdline);
 	}
 	(void)env;
