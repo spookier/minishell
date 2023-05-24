@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../incs/minishell.h"
+#include "../incs/minishell.h"
 
 void	minishell_header(void)
 {
@@ -30,12 +30,22 @@ void	minishell_header(void)
 int	minishell_main(char **env)
 {
 	char	*rdline;
-	t_Error *error;
-	
-	error = malloc(sizeof(t_Error));
-	if(!error)
-		return(-1);
-	error->error_str = NULL;
+	t_data *data;
+
+	// THIS WILL BE PARSED DATA
+	// -----------
+	char *command;
+	char **options;
+
+	command = "echo";
+	options = malloc(sizeof(char *) * 4);
+
+	options[0] = "-n";
+	options[1] = "hello";
+	options[2] = "world";
+	options[3] = NULL;
+
+	// -----------
 
 	minishell_header();
 	while (1)
@@ -46,12 +56,10 @@ int	minishell_main(char **env)
 		printf("%s", BLACK);
 		add_history(rdline);
 		printf("%s\n", rdline);
-		parse_rdline(rdline, error);
-		if(error->error_str)
-			printf("%s\n", error->error_str);
+		//parse_rdline(rdline);
+		run_command(data, command, options);
 		free(rdline);
 	}
-	free(error);
 	(void)env;
 	return (0);
 }

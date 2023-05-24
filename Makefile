@@ -13,7 +13,9 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+#CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -g3
+
 RM = rm -f
 
 LIBFT_DIR = ./libft
@@ -21,7 +23,7 @@ LIBFT_NAME = libft.a
 LIBFT = $(addprefix $(LIBFT_DIR)/, $(LIBFT_NAME))
 
 FILES =	main \
-		parsing \
+		builtin \
 
 INCS_DIR = ./incs
 

@@ -24,14 +24,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int run_command(t_data *data, char *command, char **options);
 
-typedef struct s_Error
+typedef struct s_data
 {
-	char *error_str;
-	
-} t_Error;
+	char *command;
+	char **option;
+	//t_redir **redir;
 
-char **parse_rdline(char	*str, t_Error *error);
+	//int		pid;
+	int		exit;
+} t_data;
 
 
 #endif
