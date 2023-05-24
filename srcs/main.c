@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/24 20:38:21 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/24 20:55:41 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,25 @@ int	check_valid_input(char *str)
 int	minishell_main(char **env)
 {
 	char	*rdline;
-	
+	char	**split_pipe;
+
 	minishell_header();
 	while (1)
 	{
-		ft_signal();
+		signal_detect();
 		rdline = readline("minishell$ ");
 		if (check_valid_input(rdline))
 		{
 			add_history(rdline);
-			printf("%s\n", rdline);//
+			split_pipe = ft_split(rdline, '|');
+			int	i = 0;
+			while (split_pipe[i] != NULL)
+			{
+				printf("split_pipe[%d]: %s\n\n", i, split_pipe[i]);
+				i++;
+			}
+			printf("\n");
+			free_2d_arr(split_pipe);
 		}
 		free(rdline);
 	}
