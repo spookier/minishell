@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/25 00:09:14 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/25 05:22:01 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,31 @@ extern int	g_exit_code;
 
 /* main.c */
 void	minishell_header(void);
+char	**alloc_env(char **env);
 int	minishell_main(char **env);
-int	check_valid_input(char *str);
 int	main(int argc, char **argv, char **env);
 
 /* signal.c */
 void	signal_handler(int signo);
 void	signal_detect(void);
 
-/* utils.c */
+/* parse.c */
+int	check_valid_input(char *str, char **env);
+t_data	**alloc_cmd(t_data **cmd, char **env, int i);
+t_data	**parse(t_data **cmd, char **env, char *rdline);
+
+/* parse_error.c */
+int	token_quote_err(char *line);
+int	pipe_err(char *line, int i);
+int	redir_in_err(char *line, int i);
+int	redir_out_err(char *line, int i);
+int	token_err(char *line);
+
+/* parse_utils.c */
+int	find_c_pos(char *str, char c, int start);
+void	token_err_msg(char c);
+
+/* lib_utils.c */
 void	*ft_realloc(void *old_ptr, size_t old_len, size_t new_len);
 void	free_2d_arr(char **arr);
 void	free_cmd(t_data **cmd);
