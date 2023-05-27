@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/25 05:22:01 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/27 20:19:14 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,15 @@
 # define STDOUT			1
 # define STDERR			2
 
-# define NONE			10
-# define IN			11
-# define OUT			12
-# define HEREDOC		13
-# define APPEND			14
+# define SPACE			10
+# define PIPE			11
+# define END			14
+
+# define NONE			20
+# define IN			21
+# define OUT			22
+# define HEREDOC		23
+# define APPEND			24
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -75,16 +79,24 @@ int	check_valid_input(char *str, char **env);
 t_data	**alloc_cmd(t_data **cmd, char **env, int i);
 t_data	**parse(t_data **cmd, char **env, char *rdline);
 
-/* parse_error.c */
+/* parse_token_error.c */
 int	token_quote_err(char *line);
 int	pipe_err(char *line, int i);
 int	redir_in_err(char *line, int i);
 int	redir_out_err(char *line, int i);
 int	token_err(char *line);
 
+/* parse_pos_error.c */
+void	convert_line(char *line);
+void	pos_err_msg(int	flag);
+void	revert_line(char *line);
+int	check_pos_err(char *line, int flag, int i);
+int	pos_err(char *line);
+
 /* parse_utils.c */
 int	find_c_pos(char *str, char c, int start);
-void	token_err_msg(char c);
+int	find_c_pos_err(char *str, char c, int start, int len);
+void	token_err_msg(char* s);
 
 /* lib_utils.c */
 void	*ft_realloc(void *old_ptr, size_t old_len, size_t new_len);

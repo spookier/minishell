@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 02:35:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/25 05:02:55 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/27 19:52:59 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ t_data	**alloc_cmd(t_data **cmd, char **env, int i)
 
 t_data	**parse(t_data **cmd, char **env, char *rdline)
 {
-	//1: token err check: be careful pipe for echo
-	//quote(done), pipe(done), redirection(done), backslash(done), semicolon(done)
-	//pipe position, redirection position
-	//2: replace with value of env variable
+	//todo: replace with value of env variable
 	//don't free cmd, env
 	//echo "$HOME": /home/chloe
 	//echo "'$HOME'": '/home/chloe'
@@ -63,8 +60,11 @@ t_data	**parse(t_data **cmd, char **env, char *rdline)
 	char	**split_pipe;
 	int		i;
 
-	if (token_quote_err(rdline) || token_err(rdline))
+	if (token_quote_err(rdline) || token_err(rdline) || pos_err(rdline))
+	{
+		free_cmd(cmd);
 		return (NULL);
+	}
 	printf("%srdline: %s%s\n", CYAN, rdline, BLACK);//
 	split_pipe = ft_split(rdline, '|');
 	i = -1;

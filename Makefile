@@ -6,7 +6,7 @@
 #    By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:50:04 by yhwang            #+#    #+#              #
-#    Updated: 2023/05/25 05:21:34 by yhwang           ###   ########.fr        #
+#    Updated: 2023/05/27 19:37:32 by yhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ LIBFT = $(addprefix $(LIBFT_DIR)/, $(LIBFT_NAME))
 FILES =	main \
 		signal \
 		parse \
-		parse_error \
+		parse_token_error \
+		parse_pos_error \
 		parse_utils \
 		lib_utils
 
