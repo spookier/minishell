@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 19:23:23 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/27 20:18:53 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/27 22:20:12 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	convert_line(char *line)
 		i++;
 	}
 	line[i] = END;
+	line[i + 1] = '\0';
 }
 
 void	pos_err_msg(int flag)
@@ -44,26 +45,6 @@ void	pos_err_msg(int flag)
 		token_err_msg("<<");
 	else
 		token_err_msg(">>");
-}
-
-void	revert_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] != END)
-	{
-		if (line[i] == SPACE)
-			line[i] = ' ';
-		else if (line[i] == PIPE)
-			line[i] = '|';
-		else if (line[i] == IN)
-			line[i] = '<';
-		else if (line[i] == OUT)
-			line[i] = '>';
-		i++;
-	}
-	line[i] = '\0';
 }
 
 int	check_pos_err(char *line, int flag, int i)
@@ -93,30 +74,47 @@ int	check_pos_err(char *line, int flag, int i)
 	return (0);
 }
 
+char	*copy_line(char *line)
+{
+	char	*res;
+	int		len;
+	int		i;
+
+	i = -1;
+	len = ft_strlen(line);
+	res = (char *)ft_calloc(sizeof(char), len + 2);
+	if (!res)
+		return (printf("%sError: malloc error%s\n", RED, BLACK), NULL);
+	while (line[++i])
+		res[i] = line[i];
+	return (res);
+}
+
 int	pos_err(char *line)
 {
-	int	i;
-	int	pos;
-	int	flag;
-	int	len;
+	int		i;
+	int		pos;
+	int		flag;
+	char	*copy;
 
 	i = 0;
-	flag = 0;
-	len = ft_strlen(line);
-	convert_line(line);
-	while (line[i] != END)
+	copy = copy_line(line);
+	if (!copy)
+		return (1);
+	convert_line(copy);
+	while (copy[i] != '\0')
 	{
-		if (line[i] == '\'' || line[i] == '"')
+		if (copy[i] == '\'' || copy[i] == '"')
 		{
 			i++;
-			pos = find_c_pos_err(line, line[i - 1], i, len);
+			pos = find_c_pos(line, line[i - 1], i);
 			i = (pos + 1);
 			continue ;
 		}
-		if (check_pos_err(line, flag, i))
-			return (1);
+		if (check_pos_err(copy, flag, i))
+			return (free(copy), 1);
 		i++;
 	}
-	revert_line(line);
+	free(copy);
 	return (0);
 }
