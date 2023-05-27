@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 04:11:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/27 19:59:28 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/28 00:36:12 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ int	pipe_err(char *line, int i)
 {
 	if (line[i + 1] != '\0'
 		&& (line[i + 1] == '|' || line[i + 1] == '<' || line[i + 1] == '>'))
-	{
-		token_err_msg("|");
-		return (1);
-	}
+		return (token_err_msg("|"), 1);
 	return (0);
 }
 
@@ -58,20 +55,18 @@ int	redir_in_err(char *line, int i)
 		&& (line[i + 1] == '>' || line[i + 1] == '|'))
 	{
 		if (line[i + 1] == '|')
-			token_err_msg("|");
+			return (token_err_msg("|"), 1);
 		else
-			token_err_msg("<");
-		return (1);
+			return (token_err_msg("<"), 1);
 	}
 	if ((line[i + 1] != '\0' && line[i + 1] == '<')
 		&& line[i + 2] != '\0'
 		&& (line[i + 2] == '|' || line[i + 2] == '<' || line[i + 2] == '>'))
 	{
 		if (line[i + 2] != '\0' && line[i + 2] == '|')
-			token_err_msg("|");
+			return (token_err_msg("|"), 1);
 		else
-			token_err_msg("<");
-		return (1);
+			return (token_err_msg("<"), 1);
 	}
 	return (0);
 }
@@ -82,20 +77,18 @@ int	redir_out_err(char *line, int i)
 		&& (line[i + 1] == '<' || line[i + 1] == '|'))
 	{
 		if (line[i + 1] == '|')
-			token_err_msg("|");
+			return (token_err_msg("|"), 1);
 		else
-			token_err_msg(">");
-		return (1);
+			return (token_err_msg(">"), 1);
 	}
 	if ((line[i + 1] != '\0' && line[i + 1] == '>')
 		&& line[i + 2] != '\0'
 		&& (line[i + 2] == '|' || line[i + 2] == '<' || line[i + 2] == '>'))
 	{
 		if (line[i + 2] != '\0' && line[i + 2] == '|')
-			token_err_msg("|");
+			return (token_err_msg("|"), 1);
 		else
-			token_err_msg(">");
-		return (1);
+			return (token_err_msg(">"), 1);
 	}
 	return (0);
 }
