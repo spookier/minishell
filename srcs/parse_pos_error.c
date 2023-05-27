@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 19:23:23 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/27 22:20:12 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/28 00:43:21 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,27 @@ void	pos_err_msg(int flag)
 		token_err_msg(">>");
 }
 
-int	check_pos_err(char *line, int flag, int i)
+int	check_pos_err(char *line, int *flag, int i)
 {
 	while (line[i] != END)
 	{
 		if (line[i] == PIPE || line[i] == IN || line[i] == OUT)
 		{
-			flag = line[i];
+			*flag = line[i];
 			i++;
 			if (line[i] == IN || line[i] == OUT)
 			{
 				if (line[i] == IN)
-					flag = HEREDOC;
+					*flag = HEREDOC;
 				else
-					flag = APPEND;
+					*flag = APPEND;
 				i++;
 			}
 			while (line[i] == SPACE)
 				i++;
 			if (line[i] == END || line[i] == PIPE
 				|| line[i] == IN || line[i] == OUT)
-				return (pos_err_msg(flag), 1);
+				return (pos_err_msg(*flag), 1);
 		}
 		i++;
 	}
@@ -111,7 +111,7 @@ int	pos_err(char *line)
 			i = (pos + 1);
 			continue ;
 		}
-		if (check_pos_err(copy, flag, i))
+		if (check_pos_err(copy, &flag, i))
 			return (free(copy), 1);
 		i++;
 	}

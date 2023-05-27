@@ -6,41 +6,23 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 02:35:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/27 19:52:59 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/28 00:34:13 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minishell.h"
 
-int	check_valid_input(char *str, char **env)
-{
-	if (str == NULL)
-	{
-		printf("exit\n");
-		free_2d_arr(env);
-		exit(0);
-		return (0);
-	}
-	return (1);
-}
-
-t_data	**alloc_cmd(t_data **cmd, char **env, int i)
+t_data	**alloc_cmd(t_data **cmd, int i)
 {
 	cmd = ft_realloc(cmd, sizeof(t_data *) * (i + 1),
 			sizeof(t_data *) * (i + 2));
 	if (!cmd)
-	{
-		printf("%sError: malloc error%s\n", RED, BLACK);
-		free_2d_arr(env);
-		exit(1);
-	}
+		return (printf("%sError: malloc error%s\n", RED, BLACK), NULL);
 	cmd[i] = (t_data *)ft_calloc(sizeof(t_data), 2);
 	if (!cmd[i])
 	{
 		printf("%sError: malloc error%s\n", RED, BLACK);
-		free_cmd(cmd);
-		free_2d_arr(env);
-		exit(1);
+		return (free_cmd(cmd), NULL);
 	}
 	return (cmd);
 }
@@ -61,18 +43,18 @@ t_data	**parse(t_data **cmd, char **env, char *rdline)
 	int		i;
 
 	if (token_quote_err(rdline) || token_err(rdline) || pos_err(rdline))
-	{
-		free_cmd(cmd);
-		return (NULL);
-	}
+		return (free_cmd(cmd), NULL);
 	printf("%srdline: %s%s\n", CYAN, rdline, BLACK);//
 	split_pipe = ft_split(rdline, '|');
 	i = -1;
 	while (split_pipe[++i])
 	{
-		cmd = alloc_cmd(cmd, env, i);
+		cmd = alloc_cmd(cmd, i);
+		if (!cmd)
+			return (free_2d_arr(split_pipe), NULL);
 		cmd[i]->command = split_pipe[i];
 	}
 	free_2d_arr(split_pipe);
+	(void)env;
 	return (cmd);
 }
