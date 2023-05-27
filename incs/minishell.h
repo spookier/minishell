@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/27 20:19:14 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/27 22:20:06 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,12 @@ int	token_err(char *line);
 /* parse_pos_error.c */
 void	convert_line(char *line);
 void	pos_err_msg(int	flag);
-void	revert_line(char *line);
 int	check_pos_err(char *line, int flag, int i);
+char	*copy_line(char *line);
 int	pos_err(char *line);
 
 /* parse_utils.c */
 int	find_c_pos(char *str, char c, int start);
-int	find_c_pos_err(char *str, char c, int start, int len);
 void	token_err_msg(char* s);
 
 /* lib_utils.c */
