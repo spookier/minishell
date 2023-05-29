@@ -1,0 +1,48 @@
+* single quote: donnot handle env variable with $
+* double quote: handle env variable with $
+* quote inside quote does not work
+* env key will be replaced with its value only when
+	1. $ + env key without any quote
+	2. $ + env key inside double quote
+* dollar sign removes when it meets single quote and double quote
+	- be careful when it is in the quotes
+
+echo $HOME
+	/home/chloe
+echo '$HOME'
+	$HOME
+echo "$HOME"
+	/home/chloe
+echo "'$HOME'"
+	'/home/chloe'
+echo '"$HOME"'
+	"$HOME"
+echo "$'HOME'"
+	$'HOME'
+echo '$"HOME"'
+	$"HOME"
+echo $"HOME"
+	HOME
+echo $'HOME'
+	HOME
+
+echo '$?'
+	$?
+echo "$?"
+	0(exit code)
+echo $?
+	0(exit code)
+echo "'$?'"
+	'0'(exit code)
+echo '"$?"'
+	"$?"
+echo $"?"
+	?
+
+
+echo $
+	$
+echo $"abc"
+	abc
+echo $'abc'
+	abc

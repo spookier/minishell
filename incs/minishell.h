@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/28 00:46:20 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/29 03:40:09 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,19 @@ void		signal_detect(void);
 t_data		**alloc_cmd(t_data **cmd, int i);
 t_data		**parse(t_data **cmd, char **env, char *rdline);
 
-/* parse_token_error.c */
+/* parse_token_error_1.c */
 int			token_quote_err(char *line);
-int			pipe_err(char *line, int i);
-int			redir_in_err(char *line, int i);
-int			redir_out_err(char *line, int i);
+int			token_pipe_err(char *line, int i);
+int			token_ampersand_err(char *line, int i);
 int			token_err(char *line);
 
-/* parse_pos_error.c */
+/* parse_token_error_2.c */
+int			token_redir_in_err(char *line, int i);
+int			token_redir_out_err(char *line, int i);
+int			token_semicolon_err(void);
+int			token_backslash_err(void);
+
+/* parse_token_pos_error.c */
 void		convert_line(char *line);
 void		pos_err_msg(int flag);
 int			check_pos_err(char *line, int *flag, int i);

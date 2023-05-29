@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 02:35:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/28 00:34:13 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/29 03:50:25 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,7 @@ t_data	**parse(t_data **cmd, char **env, char *rdline)
 {
 	//todo: replace with value of env variable
 	//don't free cmd, env
-	//echo "$HOME": /home/chloe
-	//echo "'$HOME'": '/home/chloe'
-	//echo ""$HOME"": /home/chloe
-	//echo "$'HOME'": $'HOME'
-	//echo $'HOME': HOME
-	//echo $"A": A
-	//ls $ABC: incs  libft  Makefile  minishell  srcs
-	//ls $PATH: ls: cannot access '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin': No such file or directory
+	
 	char	**split_pipe;
 	int		i;
 
