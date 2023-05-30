@@ -6,12 +6,12 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/29 03:40:09 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/30 01:58:42 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-# define MIHISHELL_H
+# define MINISHELL_H
 
 # define BLACK			"\x1b[0m"
 # define RED			"\x1b[31m"
