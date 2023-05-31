@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 02:35:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/31 22:39:00 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/31 22:46:53 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,15 @@ char	*convert_env(char **env, char *line, int start, int end)
 		temp = ft_substr(env[i], 0, pos);
 		if (!ft_strncmp(temp, key_value[KEY], ft_strlen(temp))
 			&& ft_strlen(temp) == ft_strlen(key_value[KEY]))
-			key_value[VALUE] = ft_substr(env[i], pos + 1, ft_strlen(env[i]) - (pos + 1));
+			key_value[VALUE]
+				= ft_substr(env[i], pos + 1, ft_strlen(env[i]) - (pos + 1));
 		free(temp);
 	}
 	if (!key_value[VALUE] && key_value[KEY][0] == '?')
 		key_value[VALUE] = ft_itoa(g_exit_code);
 	if (!key_value[VALUE])
 		key_value[VALUE] = ft_strdup("");
-	line = change_key_to_value(line, key_value[KEY], key_value[VALUE]);
-	return (line);
+	return (change_key_to_value(line, key_value[KEY], key_value[VALUE]));
 }
 
 char	*handle_env_var(char **env, char *line)
@@ -139,8 +139,8 @@ char	*handle_env_var(char **env, char *line)
 		}
 		if (line[i] == '$' && (quote == 0 || quote == 1))
 		{
-			if (!line[i + 1]
-				|| (line[i + 1] && (line[i + 1] == '\'' || line[i + 1] == ' ' || line[i + 1] == '"')))
+			if (!line[i + 1] || (line[i + 1] && (line[i + 1] == '\''
+						|| line[i + 1] == '"' || line[i + 1] == ' ')))
 				break ;
 			remove_str_from_line(line, i, 1);
 			pos = find_c_pos(line, ' ', i);
