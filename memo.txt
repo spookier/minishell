@@ -15,6 +15,7 @@ echo "$HOME"		yes
 	/home/chloe
 echo "'$HOME'"		yes
 	'/home/chloe'
+
 echo '"$HOME"'		yes
 	"$HOME"
 echo "$'HOME'"		yes
@@ -25,6 +26,8 @@ echo $"HOME"		yes
 	HOME
 echo $'HOME'		yes
 	HOME
+
+$HOME '$HOME' "$HOME" "'$HOME'" '"$HOME"' "$'HOME'" '$"HOME"' $"HOME" $'HOME'
 
 echo '$?'
 	$?

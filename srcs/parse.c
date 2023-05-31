@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 02:35:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/31 04:36:35 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/31 05:13:41 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*convert_env(char **env, char *line, int start, int end)
 	int		pos;
 	int		i;
 
-	if (line[end - 1] == '"' || line[end - 1] == '\'')
+	while (line[end - 1] == '"' || line[end - 1] == '\'')
 		end--;
 	key = ft_substr(line, start, end - start);
 	value = NULL;
