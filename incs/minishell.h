@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/30 01:58:42 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/31 01:12:51 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,9 @@ char		*copy_line(char *line);
 int			pos_err(char *line);
 
 /* parse_utils.c */
-int			find_c_pos(char *str, char c, int start);
 void		token_err_msg(char *s);
+int			find_c_pos(char *str, char c, int start);
+char		*remove_str_from_line(char *line, int str_start_pos, int str_len);
 
 /* lib_utils.c */
 void		*ft_realloc(void *old_ptr, size_t old_len, size_t new_len);

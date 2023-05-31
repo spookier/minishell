@@ -7,23 +7,23 @@
 * dollar sign removes when it meets single quote and double quote
 	- be careful when it is in the quotes
 
-echo $HOME
+echo $HOME		yes
 	/home/chloe
-echo '$HOME'
+echo '$HOME'		yes
 	$HOME
-echo "$HOME"
+echo "$HOME"		
 	/home/chloe
-echo "'$HOME'"
+echo "'$HOME'"		
 	'/home/chloe'
-echo '"$HOME"'
+echo '"$HOME"'		yes
 	"$HOME"
-echo "$'HOME'"
+echo "$'HOME'"		yes
 	$'HOME'
-echo '$"HOME"'
+echo '$"HOME"'		yes
 	$"HOME"
-echo $"HOME"
+echo $"HOME"		yes
 	HOME
-echo $'HOME'
+echo $'HOME'		yes
 	HOME
 
 echo '$?'
@@ -40,9 +40,9 @@ echo $"?"
 	?
 
 
-echo $
+echo $			yes
 	$
-echo $"abc"
+echo $"abc"		yes
 	abc
-echo $'abc'
+echo $'abc'		yes
 	abc
