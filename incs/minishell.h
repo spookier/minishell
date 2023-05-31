@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/31 01:12:51 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/05/31 21:57:14 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 # define OUT			22
 # define HEREDOC		23
 # define APPEND			24
+
+# define KEY			0
+# define VALUE			1
+# define TEMP			2
 
 # include <readline/readline.h>
 # include <readline/history.h>

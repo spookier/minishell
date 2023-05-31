@@ -1,3 +1,5 @@
+<handling quote, double quote, dollar sign with env variable>
+-----------------------------------------------------------------------------------------------
 * single quote: donnot handle env variable with $
 * double quote: handle env variable with $
 * quote inside quote does not work
@@ -6,46 +8,44 @@
 	2. $ + env key inside double quote
 * dollar sign removes when it meets single quote and double quote
 	- be careful when it is in the quotes
-
-echo $HOME		yes
+-----------------------------------------------------------------------------------------------
+1. echo $HOME
 	/home/chloe
-echo '$HOME'		yes
+2. echo '$HOME'
 	$HOME
-echo "$HOME"		yes
+3. echo "$HOME"
 	/home/chloe
-echo "'$HOME'"		yes
+4. echo "'$HOME'"
 	'/home/chloe'
-echo '"$HOME"'		yes
+5. echo '"$HOME"'
 	"$HOME"
-
-echo "$'HOME'"		yes
+6. echo "$'HOME'"
 	$'HOME'
-echo '$"HOME"'		yes
+7. echo '$"HOME"'
 	$"HOME"
-echo $"HOME"		yes
+8. echo $"HOME"
 	HOME
-echo $'HOME'		yes
+9. echo $'HOME'
 	HOME
-
-$HOME '$HOME' "$HOME" "'$HOME'" '"$HOME"' "$'HOME'" '$"HOME"' $"HOME" $'HOME'
-
-echo '$?'
-	$?
-echo "$?"
-	0(exit code)
-echo $?
-	0(exit code)
-echo "'$?'"
-	'0'(exit code)
-echo '"$?"'
-	"$?"
-echo $"?"
-	?
-
-
-echo $			yes
+10. echo "$HOME '$HOME' "$HOME" "'$HOME'" '"$HOME"' "$'HOME'" '$"HOME"' $"HOME" $'HOME'"
+	/home/chloe '/home/chloe' /home/chloe $HOME '/home/chloe' HOME '$HOME' $HOME $'HOME'
+-----------------------------------------------------------------------------------------------
+11. echo $
 	$
-echo $"abc"		yes
+12. echo $"abc"
 	abc
-echo $'abc'		yes
+13. echo $'abc'
 	abc
+-----------------------------------------------------------------------------------------------
+14. echo '$?'
+	$?
+15. echo "$?"
+	0(exit code)
+16. echo $?
+	0(exit code)
+17. echo "'$?'"
+	'0'(exit code)
+18. echo '"$?"'
+	"$?"
+19. echo $"?"
+	?
