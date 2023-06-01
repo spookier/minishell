@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 04:02:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/06/01 04:11:34 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/06/01 06:07:18 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ char	*change_key_to_value(char *line,
 	j = -1;
 	while (line_after_env[++j])
 		line[i++] = line_after_env[j];
+	line[i] = '\0';
 	free(key);
 	free(value);
 	free(line_before_env);
-	free(line_after_env);
-	return (line);
+	return (free(line_after_env), line);
 }
 
 char	*env_check_value(char **env, char *line, int start, int end)
@@ -66,7 +66,7 @@ char	*env_check_value(char **env, char *line, int start, int end)
 	}
 	if (!key_value[VALUE] && key_value[KEY][0] == '?')
 		key_value[VALUE] = ft_itoa(g_exit_code);
-	if (!key_value[VALUE])
+	else if (!key_value[VALUE])
 		key_value[VALUE] = ft_strdup("");
 	return (change_key_to_value(line, key_value[KEY], start, key_value[VALUE]));
 }

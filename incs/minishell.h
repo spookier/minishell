@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/06/01 04:11:28 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/06/01 06:51:06 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 # define PIPE			11
 # define END			14
 
-# define NONE			20
-# define IN			21
-# define OUT			22
-# define HEREDOC		23
-# define APPEND			24
+# define NONE			1
+# define IN			2
+# define OUT			3
+# define HEREDOC		4
+# define APPEND			5
 
 # define KEY			0
 # define VALUE			1
@@ -53,7 +53,7 @@
 
 typedef struct s_redir
 {
-	int			operation_flag;
+	int			redir_flag;
 	char		*file_name;
 }	t_redir;
 
@@ -61,7 +61,7 @@ typedef struct s_data
 {
 	char		*command;
 	char		**option;
-	t_redir		**redir;
+	t_redir		*redir;
 	int			pid;
 	int			exit;
 }	t_data;
