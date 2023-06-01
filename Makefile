@@ -6,7 +6,7 @@
 #    By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:50:04 by yhwang            #+#    #+#              #
-#    Updated: 2023/06/01 03:48:57 by yhwang           ###   ########.fr        #
+#    Updated: 2023/06/01 04:08:21 by yhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ FILES =	main \
 		parse_token_error_1 \
 		parse_token_error_2 \
 		parse_pos_error \
+		parse_dollar_quote \
+		parse_env_variable \
 		parse_utils \
 		lib_utils
 

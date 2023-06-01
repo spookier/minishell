@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/31 22:45:02 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/06/01 04:11:28 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,24 @@ int			token_redir_out_err(char *line, int i);
 int			token_semicolon_err(void);
 int			token_backslash_err(void);
 
-/* parse_token_pos_error.c */
+/* parse_pos_error.c */
 void		convert_line(char *line);
 void		pos_err_msg(int flag);
 int			check_pos_err(char *line, int *flag, int i);
 char		*copy_line(char *line);
 int			pos_err(char *line);
+
+/* parse_dollar_quote.c */
+void		remove_dollar(char *line);
+void		remove_quote(char *line);
+
+/* parse_env_variable.c */
+char		*change_key_to_value(char *line,
+				char *key, int pos_key_start, char *value);
+char		*env_check_value(char **env, char *line, int start, int end);
+char		*env_var_convert_line(char **env, char *line, int i);
+void		handle_env_var_norminette(int *quote);
+char		*handle_env_var(char **env, char *line);
 
 /* parse_utils.c */
 void		token_err_msg(char *s);
