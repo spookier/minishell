@@ -49,3 +49,9 @@
 	"$?"
 19. echo $"?"
 	?
+
+
+
+
+echo $ABC $HOME "ok" | ls | echo "ABCDE"
+ls < a | ls << a | ls > a | ls >> a
