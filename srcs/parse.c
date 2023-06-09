@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 02:35:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/06/01 07:07:34 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/06/04 03:57:37 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ char	*make_new_line(char **env, char *rdline)
 	return (line);
 }
 
+int	is_redir(char *str)
+{
+	if ((!strncmp("<", str, 1) && ft_strlen(str) == 1)
+		|| (!strncmp(">", str, 1) && ft_strlen(str) == 1)
+		|| (!strncmp("<<", str, 1) && ft_strlen(str) == 2)
+		|| (!strncmp(">>", str, 1) && ft_strlen(str) == 2))
+		return (1);
+	return (0);
+}
+
 void	fill_option(t_data **cmd, char **split_cmd, int cmd_i)
 {
 	int	i;
@@ -47,22 +57,40 @@ void	fill_option(t_data **cmd, char **split_cmd, int cmd_i)
 	j = 0;
 	cmd[cmd_i]->option[i] = NULL;
 	while (split_cmd[++i])
+	{
+		if (is_redir(split_cmd[i]))
+		{
+			i++;
+			continue ;
+		}
 		cmd[cmd_i]->option[j++] = ft_strdup(split_cmd[i]);
+	}
+}
+
+void	check_redir_filename(char *split_cmd)
+{
+	printf("filename: %s\n", split_cmd);
+	
 }
 
 void	fill_redir(t_data **cmd, char **split_cmd, int cmd_i)
 {
+	int	i;
+
 	if (cmd[cmd_i]->redir->redir_flag == NONE)
 	{
 		cmd[cmd_i]->redir->file_name = ft_strdup("");
 		return ;
 	}
-	//////////edit from here
-	int	i;
 
 	i = -1;
 	while (split_cmd[++i])
-		printf("split_cmd[%d]: %s\n", i, split_cmd[i]);
+	{
+		if (is_redir(split_cmd[i]))
+			break ;
+	}
+	i++;
+	check_redir_filename(split_cmd[i]);
 }
 
 void	check_redir(t_data **cmd, char *each_cmd, char **split_cmd, int cmd_i)
@@ -98,11 +126,17 @@ t_data	**fill_data(t_data **cmd, char *each_cmd, int cmd_i)
 {
 	char	**split_each_cmd;
 	int		option;
+	int		redir_flag;
 
 	split_each_cmd = ft_split(each_cmd, ' ');
 	option = 0;
 	while (split_each_cmd[option])
+	{
+		if (is_redir(split_each_cmd[option]))
+			redir_flag++;
 		option++;
+	}
+	option = option - (redir_flag * 2);
 	option--;
 	cmd[cmd_i]->command = ft_strdup(split_each_cmd[0]);
 	cmd[cmd_i]->option = ft_calloc(sizeof(char *), (option + 1));
