@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 02:35:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/21 20:04:56 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/08/21 20:23:59 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,15 +173,23 @@ t_data	**parse(t_data **cmd, char **env, char *rdline)
 	/* free the original command line */
 	free(line);
 	i = -1;
+	/* put command info to the cmd structure */
 	while (split_pipe[++i])
 	{
+		/* alloc cmd structure */
 		cmd = alloc_cmd(cmd, i);
+		/* error check: malloc */
 		if (!cmd)
 			return (free_2d_arr(split_pipe), NULL);
+		/* fill the command info */
 		cmd = fill_data(cmd, split_pipe[i], i);
+		/* check if any error happened and free split_pipe if there was error
+			: if any error has happened during filling the info,
+			cmd was freed and NULL was returned */
 		if (!cmd)
 			return (free_2d_arr(split_pipe), NULL);
 	}
+	/* free split_pipe after filling cmd struct */
 	free_2d_arr(split_pipe);
 
 

@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/21 20:09:30 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/08/21 20:23:13 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,12 @@ int	minishell_main(t_data **cmd, char **env)
 			return (free_cmd(cmd), 1);
 		}
 		add_history(rdline);
+		/* start parsing */
 		cmd = parse(cmd, env, rdline);
+		/* check if any error happened and free rdline if there was error
+			and recieve next command by repeating while loop
+			: if any error has happened during parsing,
+			cmd is freed and NULL was returned */
 		if (!cmd)
 		{
 			free(rdline);
@@ -100,11 +105,12 @@ int	main(int argc, char **argv, char **env)
 	/* print our minishell header */
 	minishell_header();
 	cmd = NULL;
-	/* normal operation: in case of any error, free env variable and return 1 */
+	/* normal operation
+		: if any error happened, free env variable and return 1 */
 	if (minishell_main(cmd, env))
 		return (free_2d_arr(env), 1);
 	/* run command */
-	exec(cmd, env);
+	//exec(cmd, env);
 	/* free: env variable */
 	free_2d_arr(env);
 	return (0);
