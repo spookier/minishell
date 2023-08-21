@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/28 00:41:05 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/08/21 19:06:29 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,16 @@ int	minishell_main(t_data **cmd, char **env)
 
 	while (1)
 	{
+		/* detect signal */
 		signal_detect();
+		/* alloc cmd */
 		cmd = ft_calloc(sizeof(t_data *), 2);
+		/* error check: malloc */
 		if (!cmd)
 			return (printf("%sError: malloc error%s\n", RED, BLACK), 1);
-		rdline = readline("minishell$ ");
+		/* read command  */
+		rdline = readline("\x1b[36mminishell$\x1b[0m ");
+		/*  */
 		if (!rdline)
 		{
 			printf("exit\n");
@@ -83,16 +88,22 @@ int	main(int argc, char **argv, char **env)
 	t_data	**cmd;
 
 	(void)argv;
+	/* error check: argument */
 	if (argc != 1)
 		return (printf("%sArgument error\nUseage: ./minishell%s\n",
 				RED, BLACK), 1);
+	/* alloc env variable */
 	env = alloc_env(env);
+	/* error check: malloc */
 	if (!env)
 		return (1);
+	/* print our minishell header */
 	minishell_header();
 	cmd = NULL;
+	/* normal operation: in case of any error, free env variable and return 1 */
 	if (minishell_main(cmd, env))
 		return (free_2d_arr(env), 1);
+	/* free: env variable */
 	free_2d_arr(env);
 	return (0);
 }

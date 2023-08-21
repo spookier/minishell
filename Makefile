@@ -6,7 +6,7 @@
 #    By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:50:04 by yhwang            #+#    #+#              #
-#    Updated: 2023/06/01 06:57:08 by yhwang           ###   ########.fr        #
+#    Updated: 2023/08/21 18:52:35 by yhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ $(LIBFT_NAME):
 
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $^ -o $@ -I$(INCS_DIR) -lreadline
-	@echo "$(YELLOW)minishell compiled$(RESET)"
+	@echo "$(YELLOW)🐥 minishell compiled 🐥$(RESET)"
 
 clean:
 	@make clean -C $(LIBFT_DIR)
