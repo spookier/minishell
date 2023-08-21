@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/21 19:06:29 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/08/21 20:09:30 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int	main(int argc, char **argv, char **env)
 	/* normal operation: in case of any error, free env variable and return 1 */
 	if (minishell_main(cmd, env))
 		return (free_2d_arr(env), 1);
+	/* run command */
+	exec(cmd, env);
 	/* free: env variable */
 	free_2d_arr(env);
 	return (0);
