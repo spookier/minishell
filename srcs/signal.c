@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:26:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/05/25 02:07:27 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/08/21 19:31:22 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	g_exit_code;
 
 void	signal_handler(int signo)
 {
+	/* ctrl - c */
 	if (signo == SIGINT)
 	{
 		printf("\n");
@@ -24,6 +25,7 @@ void	signal_handler(int signo)
 		rl_redisplay();
 		g_exit_code = 130;
 	}
+	/* ctrl - \ */
 	else if (signo == SIGQUIT)
 	{
 		rl_on_new_line();

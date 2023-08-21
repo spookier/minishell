@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 02:35:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/06/04 03:57:37 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/08/21 19:37:59 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,11 @@ t_data	**fill_data(t_data **cmd, char *each_cmd, int cmd_i)
 			redir_flag++;
 		option++;
 	}
+	if (option == 0)
+	{
+		free_2d_arr(split_each_cmd);
+		return (free_cmd(cmd), NULL);
+	}
 	option = option - (redir_flag * 2);
 	option--;
 	cmd[cmd_i]->command = ft_strdup(split_each_cmd[0]);
@@ -144,6 +149,7 @@ t_data	**fill_data(t_data **cmd, char *each_cmd, int cmd_i)
 	if (!cmd[cmd_i]->option || !cmd[cmd_i]->redir)
 	{
 		printf("%sError: malloc error%s\n", RED, BLACK);
+		free_2d_arr(split_each_cmd);
 		return (free_cmd(cmd), NULL);
 	}
 	fill_option(cmd, split_each_cmd, cmd_i);
@@ -157,9 +163,11 @@ t_data	**parse(t_data **cmd, char **env, char *rdline)
 	char	**split_pipe;
 	int		i;
 
+	/* command line error check: quote, pipe, empersand, redirect, semicolon, backslash */
 	//todo: handle error code
 	if (token_quote_err(rdline) || token_err(rdline) || pos_err(rdline))
 		return (free_cmd(cmd), NULL);
+	/* make new command line: handle env variable, remove dollar sign */
 	line = make_new_line(env, rdline);
 	printf("%sline: %s%s\n", CYAN, line, BLACK);//
 	split_pipe = ft_split(line, '|');
@@ -199,5 +207,6 @@ t_data	**parse(t_data **cmd, char **env, char *rdline)
 			printf("       redir: NONE\n");
 	}
 	printf("%s", BLACK);
+	
 	return (cmd);
 }
