@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 02:35:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/21 19:37:59 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/08/21 20:02:55 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,15 +136,13 @@ t_data	**fill_data(t_data **cmd, char *each_cmd, int cmd_i)
 			redir_flag++;
 		option++;
 	}
-	if (option == 0)
+	if (!option)
 	{
 		free_2d_arr(split_each_cmd);
 		return (free_cmd(cmd), NULL);
 	}
-	option = option - (redir_flag * 2);
-	option--;
 	cmd[cmd_i]->command = ft_strdup(split_each_cmd[0]);
-	cmd[cmd_i]->option = ft_calloc(sizeof(char *), (option + 1));
+	cmd[cmd_i]->option = ft_calloc(sizeof(char *), option);
 	cmd[cmd_i]->redir = ft_calloc(sizeof(t_redir *), 2);
 	if (!cmd[cmd_i]->option || !cmd[cmd_i]->redir)
 	{
