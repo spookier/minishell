@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/21 20:23:13 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/08/21 20:39:12 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,12 @@ int	minishell_main(t_data **cmd, char **env)
 		/* error check: malloc */
 		if (!cmd)
 			return (printf("%sError: malloc error%s\n", RED, BLACK), 1);
-		/* read command  */
+		/* read command */
 		rdline = readline("\x1b[36mminishell$\x1b[0m ");
-		/*  */
+		/* when rdline is NULL: ctrl - D */
 		if (!rdline)
 		{
+			/* print exit and free cmd structure */
 			printf("exit\n");
 			return (free_cmd(cmd), 1);
 		}
@@ -75,7 +76,7 @@ int	minishell_main(t_data **cmd, char **env)
 		/* start parsing */
 		cmd = parse(cmd, env, rdline);
 		/* check if any error happened and free rdline if there was error
-			and recieve next command by repeating while loop
+			and then while loop will be repeated
 			: if any error has happened during parsing,
 			cmd is freed and NULL was returned */
 		if (!cmd)
@@ -83,6 +84,14 @@ int	minishell_main(t_data **cmd, char **env)
 			free(rdline);
 			continue ;
 		}
+
+		
+		/* execute command */
+		//exec_main(cmd, env);
+		
+		
+		
+		/* free rdline and cmd struct for next command */
 		free(rdline);
 		free_cmd(cmd);
 	}
@@ -109,8 +118,6 @@ int	main(int argc, char **argv, char **env)
 		: if any error happened, free env variable and return 1 */
 	if (minishell_main(cmd, env))
 		return (free_2d_arr(env), 1);
-	/* run command */
-	//exec(cmd, env);
 	/* free: env variable */
 	free_2d_arr(env);
 	return (0);
