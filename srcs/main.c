@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/21 20:39:12 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/08/21 21:58:26 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,33 @@ void	minishell_header(void)
 	printf("%s\n", BLACK);
 }
 
+void	exec_main(t_data **cmd, char **env)//erase later
+{
+	int	i;
+
+	(void)env;
+	i = -1;
+	printf("%s", YELLOW);
+	while (cmd[++i])
+	{
+		printf("cmd[%d] command: %s\n", i, cmd[i]->command);
+		int j = -1;
+		while (cmd[i]->option[++j])
+			printf("       option[%d]: %s\n", j, cmd[i]->option[j]);
+		if (cmd[i]->redir->redir_flag == IN)
+			printf("       redir: IN, filename: %s\n", cmd[i]->redir->file_name);
+		else if (cmd[i]->redir->redir_flag == OUT)
+			printf("       redir: OUT, filename: %s\n", cmd[i]->redir->file_name);
+		else if (cmd[i]->redir->redir_flag == HEREDOC)
+			printf("       redir: HEREDOC, filename: %s\n", cmd[i]->redir->file_name);
+		else if (cmd[i]->redir->redir_flag == APPEND)
+			printf("       redir: APPEND, filename: %s\n", cmd[i]->redir->file_name);
+		else
+			printf("       redir: NONE\n");
+	}
+	printf("%s", BLACK);
+}
+
 int	minishell_main(t_data **cmd, char **env)
 {
 	char	*rdline;
@@ -84,13 +111,8 @@ int	minishell_main(t_data **cmd, char **env)
 			free(rdline);
 			continue ;
 		}
-
-		
-		/* execute command */
-		//exec_main(cmd, env);
-		
-		
-		
+//alex		/* execute command */
+		exec_main(cmd, env);
 		/* free rdline and cmd struct for next command */
 		free(rdline);
 		free_cmd(cmd);
