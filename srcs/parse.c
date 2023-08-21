@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 02:35:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/21 20:23:59 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/08/21 21:51:20 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,6 @@ void	fill_option(t_data **cmd, char **split_cmd, int cmd_i)
 	}
 }
 
-void	check_redir_filename(char *split_cmd)
-{
-	printf("filename: %s\n", split_cmd);
-	
-}
 
 void	fill_redir(t_data **cmd, char **split_cmd, int cmd_i)
 {
@@ -82,7 +77,6 @@ void	fill_redir(t_data **cmd, char **split_cmd, int cmd_i)
 		cmd[cmd_i]->redir->file_name = ft_strdup("");
 		return ;
 	}
-
 	i = -1;
 	while (split_cmd[++i])
 	{
@@ -90,7 +84,7 @@ void	fill_redir(t_data **cmd, char **split_cmd, int cmd_i)
 			break ;
 	}
 	i++;
-	check_redir_filename(split_cmd[i]);
+	cmd[cmd_i]->redir->file_name = ft_strdup(split_cmd[i]);
 }
 
 void	check_redir(t_data **cmd, char *each_cmd, char **split_cmd, int cmd_i)
@@ -126,32 +120,41 @@ t_data	**fill_data(t_data **cmd, char *each_cmd, int cmd_i)
 {
 	char	**split_each_cmd;
 	int		option;
-	int		redir_flag;
 
+	/* split the command(=splited by pipe) by space,
+		so that we can save command and options */
 	split_each_cmd = ft_split(each_cmd, ' ');
+	/* for counting options */
 	option = 0;
+	/* if <, >, <<, >> is detected, increase option */
 	while (split_each_cmd[option])
-	{
-		if (is_redir(split_each_cmd[option]))
-			redir_flag++;
 		option++;
-	}
-	if (!option)
+	/* when option is 0: there is no command(only spaces) */
+	if (!(option))
 	{
+		/* free the split_each_cmd and cmd struct, return NULL as cmd struct */
 		free_2d_arr(split_each_cmd);
 		return (free_cmd(cmd), NULL);
 	}
+	/* alloc optionand copy the command(first one) */
 	cmd[cmd_i]->command = ft_strdup(split_each_cmd[0]);
+	/* alloc option and redir */
 	cmd[cmd_i]->option = ft_calloc(sizeof(char *), option);
 	cmd[cmd_i]->redir = ft_calloc(sizeof(t_redir *), 2);
+	/* error check: malloc */
 	if (!cmd[cmd_i]->option || !cmd[cmd_i]->redir)
 	{
 		printf("%sError: malloc error%s\n", RED, BLACK);
+		/* free the split_each_cmd and cmd struct, return NULL as cmd struct */
 		free_2d_arr(split_each_cmd);
 		return (free_cmd(cmd), NULL);
 	}
+	/* fill option: regard option as the things after command(second, third, ...) */
 	fill_option(cmd, split_each_cmd, cmd_i);
+	/* check redirection: <, >, <<, >> if there is, else put NONE,
+		and save filename to the cmd->redir */
 	check_redir(cmd, each_cmd, split_each_cmd, cmd_i);
+	/* free split_each_cmd and return cmd struct */
 	return (free_2d_arr(split_each_cmd), cmd);
 }
 
@@ -162,9 +165,11 @@ t_data	**parse(t_data **cmd, char **env, char *rdline)
 	int		i;
 
 	/* command line error check: quote, pipe, empersand, redirect, semicolon, backslash */
-	//todo: handle error code
 	if (token_quote_err(rdline) || token_err(rdline) || pos_err(rdline))
+	{
+		g_exit_code = 2;
 		return (free_cmd(cmd), NULL);
+	}
 	/* make new command line: handle env variable, remove dollar sign */
 	line = make_new_line(env, rdline);
 	printf("%sline: %s%s\n", CYAN, line, BLACK);//
@@ -191,30 +196,5 @@ t_data	**parse(t_data **cmd, char **env, char *rdline)
 	}
 	/* free split_pipe after filling cmd struct */
 	free_2d_arr(split_pipe);
-
-
-
-
-	i = -1;//
-	printf("%s", YELLOW);
-	while (cmd[++i])//
-	{
-		printf("cmd[%d] command: %s\n", i, cmd[i]->command);//
-		int j = -1;//
-		while (cmd[i]->option[++j])//
-			printf("       option[%d]: %s\n", j, cmd[i]->option[j]);//
-		if (cmd[i]->redir->redir_flag == IN)
-			printf("       redir: IN\n");
-		else if (cmd[i]->redir->redir_flag == OUT)
-			printf("       redir: OUT\n");
-		else if (cmd[i]->redir->redir_flag == HEREDOC)
-			printf("       redir: HEREDOC\n");
-		else if (cmd[i]->redir->redir_flag == APPEND)
-			printf("       redir: APPEND\n");
-		else
-			printf("       redir: NONE\n");
-	}
-	printf("%s", BLACK);
-	
 	return (cmd);
 }
