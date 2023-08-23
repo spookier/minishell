@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/23 02:08:04 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/08/23 02:26:54 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ void		handle_env_var_norminette(int *quote);
 char		*handle_env_var(char **env, char *line);
 
 /* parse_fill_cmd_struct.c */
-void		fill_option(t_data **cmd, char **split_cmd, int cmd_i);
 int			is_redir(char *str);
+void		fill_option(t_data **cmd, char **split_cmd, int cmd_i);
 void		fill_redir(t_data **cmd, char **split_cmd, int cmd_i);
 void		check_redir(t_data **cmd,
 				char *each_cmd, char **split_cmd, int cmd_i);
