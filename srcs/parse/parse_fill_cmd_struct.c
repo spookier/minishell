@@ -6,11 +6,21 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:51:02 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/23 02:05:24 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/08/23 02:26:41 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+int	is_redir(char *str)
+{
+	if ((!strncmp("<", str, 1) && ft_strlen(str) == 1)
+		|| (!strncmp(">", str, 1) && ft_strlen(str) == 1)
+		|| (!strncmp("<<", str, 1) && ft_strlen(str) == 2)
+		|| (!strncmp(">>", str, 1) && ft_strlen(str) == 2))
+		return (1);
+	return (0);
+}
 
 void	fill_option(t_data **cmd, char **split_cmd, int cmd_i)
 {
@@ -29,16 +39,6 @@ void	fill_option(t_data **cmd, char **split_cmd, int cmd_i)
 		}
 		cmd[cmd_i]->option[j++] = ft_strdup(split_cmd[i]);
 	}
-}
-
-int	is_redir(char *str)
-{
-	if ((!strncmp("<", str, 1) && ft_strlen(str) == 1)
-		|| (!strncmp(">", str, 1) && ft_strlen(str) == 1)
-		|| (!strncmp("<<", str, 1) && ft_strlen(str) == 2)
-		|| (!strncmp(">>", str, 1) && ft_strlen(str) == 2))
-		return (1);
-	return (0);
 }
 
 void	fill_redir(t_data **cmd, char **split_cmd, int cmd_i)
