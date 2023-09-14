@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/12 22:30:53 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/14 06:47:55 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_data
 	char		**option;
 	t_redir		*redir;
 	int			exit;
+	int			pid;
 }	t_data;
 
 extern int	g_exit_code;
