@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:28:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/13 01:43:52 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/14 07:44:21 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,48 @@ void	check_heredoc(t_data **cmd)
 	}
 }
 
-// void	alloc_pipe(t_data **cmd, int (*_pipe)[2])
-// {
-// 	int	i;
+void	alloc_pipe(t_data **cmd, int (**_pipe)[2])
+{
+	int	i;
 
-// 	i = 0;
-// 	while (cmd[i])
-// 	{
-		
-// 	}
-// }
+	i = 0;
+	*_pipe = NULL;
+	while (cmd[i + 1])
+	{
+		*_pipe = ft_realloc(*_pipe, sizeof(int *) * i,
+	 		sizeof(int *) * (i + 1));
+		pipe((*_pipe)[i]);
+		printf("%dth: pipe created\n", i);//
+		i++;
+	}
+}
+
+void	close_pipe(t_data **cmd, int (**_pipe)[2])
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i + 1])
+	{
+		close((*_pipe)[i][STDIN]);
+		close((*_pipe)[i][STDOUT]);
+		printf("%dth: pipe closed\n", i);//
+		i++;
+	}
+}
+
+int	is_builtin_cmd(char *command)
+{
+	if ((!ft_strncmp(command, "echo", 4) && ft_strlen(command) == 4)
+		|| (!ft_strncmp(command, "env", 3) && ft_strlen(command) == 3)
+		|| (!ft_strncmp(command, "unset", 5) && ft_strlen(command) == 5)
+		|| (!ft_strncmp(command, "export", 6) && ft_strlen(command) == 6)
+		|| (!ft_strncmp(command, "cd", 2) && ft_strlen(command) == 2)
+		|| (!ft_strncmp(command, "pwd", 3) && ft_strlen(command) == 3)
+		|| (!ft_strncmp(command, "exit", 4) && ft_strlen(command) == 4))
+		return (1);
+	return (0);
+}
 
 void	exec_main(t_data **cmd, char **env)
 {
@@ -103,10 +135,58 @@ void	exec_main(t_data **cmd, char **env)
 	printf("%s", BLACK);
 	//until here
 
-	//int	_pipe[2];
-	//int	fd[2];
-	// int	i;
+	int	(*_pipe)[2];
+	// int	fd[2];
+	int	i;
 
+	_pipe = NULL;
 	check_heredoc(cmd);
-	//alloc_pipe(cmd, &_pipe);
+	alloc_pipe(cmd, &_pipe);
+	i = 0;
+	while (cmd[i])
+	{
+		if (!is_builtin_cmd(cmd[i]->command) || cmd[i + 1])
+		{
+			cmd[i]->pid = fork();
+			printf("forked\n");
+		}
+		if (cmd[i]->pid == 0)
+		{
+			printf("this is child, pid %d\n", cmd[i]->pid);
+			if (i > 0)
+				dup2(_pipe[i][STDIN], STDIN);
+			if (cmd[i + 1])
+				dup2(_pipe[i][STDOUT], STDOUT);
+			close_pipe(cmd, &_pipe);
+			//execute comand
+			if (!is_builtin_cmd(cmd[i]->command)
+				|| i > 0)
+				exit(0);//
+		}
+		i++;
+	}
+
+	int	j;
+	int	status;
+
+	j = 0;
+	while (cmd[j])
+	{
+		if (cmd[j + 1])
+			waitpid(cmd[j]->pid, NULL, 0);
+		else
+		{
+			waitpid(cmd[j]->pid, &status, 0);
+			if (WIFEXITED(status))
+			{
+				g_exit_code = WEXITSTATUS(status);
+				return ;
+			}
+		}
+		j++;
+	}
+	if (g_exit_code == 0)
+		g_exit_code = cmd[0]->exit;
+	close_pipe(cmd, &_pipe);
+	free((*_pipe));
 }
