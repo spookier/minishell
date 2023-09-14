@@ -138,4 +138,8 @@ void		free_cmd(t_data **cmd);
 /* execute_main.c */
 void		exec_main(t_data **cmd, char **env);
 
+
+void		exit_builtin(t_data *cmd);
+
+
 #endif
