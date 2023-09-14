@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/23 02:26:54 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/12 22:30:53 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int			pos_err(char *line);
 /* parse_make_new_line.c */
 void		remove_dollar(char *line);
 void		remove_quote(char *line);
+char		*put_space(char *line, int i, int redir_len, char redir);
+char		*redir_put_space(char *line);
 char		*make_new_line(char **env, char *rdline);
 
 /* parse_handle_env_variable.c */
