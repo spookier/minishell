@@ -50,6 +50,7 @@
 # include <sys/errno.h>
 # include <limits.h>
 # include "../libft/incs/libft.h"
+# include "../libft/incs/ft_printf.h"
 
 typedef struct s_redir
 {
@@ -140,6 +141,7 @@ void		exec_main(t_data **cmd, char **env);
 
 
 void		exit_builtin(t_data *cmd);
+void		echo_builtin(t_data *cmd);
 
 
 #endif

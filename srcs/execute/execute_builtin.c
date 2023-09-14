@@ -9,3 +9,8 @@ void exit_builtin(t_data *cmd)
         exit_status = ft_atoi(cmd->option[0]);
     exit(exit_status);
 }
+
+void echo_builtin(t_data *cmd)
+{
+    ft_printf("%s\n", cmd->command);
+}

@@ -150,26 +150,17 @@ int	redir_set_fd(t_data *cmd)
 	return (1);
 }
 
-// void	execute_command(t_data *cmd, char **env)
-// {
-// 	// if ((!ft_strncmp(cmd->command, "echo", 4) && ft_strlen(cmd->command) == 4))
-// 	// 	exit_builtin(cmd);
-// 	// else if ((!ft_strncmp(cmd->command, "env", 3) && ft_strlen(cmd->command) == 3))
-// 	// 	env_builtin(env);
-// 	// else if ((!ft_strncmp(cmd->command, "unset", 5) && ft_strlen(cmd->command) == 5))
-// 	// 	unset_builtin(cmd, env);
-// 	// else if ((!ft_strncmp(cmd->command, "export", 6) && ft_strlen(cmd->command) == 6))
-// 	// 	export_builtin(cmd, env);
-// 	// else if ((!ft_strncmp(cmd->command, "cd", 2) && ft_strlen(cmd->command) == 2))
-// 	// 	cd_builtin(cmd, env);
-// 	// else if ((!ft_strncmp(cmd->command, "pwd", 3) && ft_strlen(cmd->command) == 3))
-// 	// 	pwd_builtin();
-// 	// else if (!is_builtin_cmd(cmd->command))
-// 	// 	non_builtin(cmd, env);
+void	execute_cmd(t_data *cmd, char **env)
+{
+	(void)env;
 
-// 	// if (cmd->pid == 0)
-// 	// 	exit(cmd->exit);
-// }
+	if ((!ft_strncmp(cmd->command, "exit", 4) && ft_strlen(cmd->command) == 4))
+		exit_builtin(cmd);
+	if ((!ft_strncmp(cmd->command, "echo", 4) && ft_strlen(cmd->command) == 4))
+		echo_builtin(cmd);
+	// if (cmd->pid == 0)
+	// 	exit(cmd->exit);
+}
 
 void	exec_main(t_data **cmd, char **env)
 {
@@ -224,8 +215,12 @@ void	exec_main(t_data **cmd, char **env)
 				dup2(_pipe[i][STDOUT], STDOUT);
 			close_pipe(cmd, &_pipe);
 			if (redir_set_fd(cmd[i]))
-				printf("prepared execution\n");
-				//execute_cmd(cmd[i], env);
+
+
+				execute_cmd(cmd[i], env);
+				
+
+
 			if (!is_builtin_cmd(cmd[i]->command) || (is_builtin_cmd(cmd[i]->command) && i > 0))//
 				exit(0);//
 		}
