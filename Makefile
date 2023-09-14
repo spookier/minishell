@@ -37,6 +37,7 @@ FILES =	main \
 		$(PARSE)parse_utils \
 		$(PARSE)parse_lib_utils \
 		$(EXECUTE)execute_main \
+		$(EXECUTE)execute_builtin \
 
 INCS_DIR = ./incs
 
