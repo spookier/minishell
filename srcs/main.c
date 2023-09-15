@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/13 00:51:27 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/15 03:41:06 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,33 @@ char	**alloc_env(char **env)
 
 void	signal_handler(int signo)
 {
+	pid_t	pid;
+	int		status;
+
+	pid = waitpid(-1, &status, WNOHANG);
 	if (signo == SIGINT)
 	{
-		printf("\n");
-		rl_on_new_line();
-		rl_redisplay();
-		g_exit_code = 130;
+		if (pid == 0)
+			printf("\n");
+		else
+		{
+			printf("\n");
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+			g_exit_code = 130;
+		}
 	}
 	else if (signo == SIGQUIT)
 	{
-		rl_on_new_line();
-		rl_redisplay();
-		g_exit_code = 127;
+		if (pid == 0)
+			printf("Quit\n");
+		else
+		{
+			rl_on_new_line();
+			rl_redisplay();
+			g_exit_code = 127;
+		}	
 	}
 }
 

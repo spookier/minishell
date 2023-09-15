@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/14 06:47:55 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/15 03:40:15 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,31 @@ void		free_cmd(t_data **cmd);
 
 /* 🐥 execute 🐥 */
 /* execute_main.c */
+void		execute_cmd(t_data *cmd, char **env);
+void		wait_pid(t_data **cmd);
 void		exec_main(t_data **cmd, char **env);
+
+/* execute_heredoc.c */
+void		write_heredoc(int fd_heredoc, char *delim);
+void		check_heredoc(t_data **cmd);
+
+/* execute_pipe.c */
+void		alloc_pipe(t_data **cmd, int (**_pipe)[2]);
+void		close_pipe(t_data **cmd, int (**_pipe)[2]);
+
+/* execute_redir.c */
+int			redir_open_file(int *in_fd, int *out_fd, t_data *cmd);
+int			redir_set_fd(t_data *cmd);
+
+/* execute_non_builtin.c */
+char		*gain_env_value(char *key, char **env);
+char		*find_cmd_path(t_data *cmd, char **env);
+void		non_builtin(t_data *cmd, char **env);
+
+/* execute_utils.c */
+int			is_builtin_cmd(char *command);
+char		*append_str_to_alloced_str(char *str1, char *str2);
+char		*append_num_to_alloced_str(char *str1, int i);
 
 
 void		exit_builtin(t_data *cmd);

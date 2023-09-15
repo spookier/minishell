@@ -6,7 +6,7 @@
 #    By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:50:04 by yhwang            #+#    #+#              #
-#    Updated: 2023/09/14 07:27:47 by yhwang           ###   ########.fr        #
+#    Updated: 2023/09/15 03:45:59 by yhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ YELLOW		:= $(shell tput -Txterm setaf 3)
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3#-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 RM = rm -f
 
 LIBFT_DIR = ./libft
@@ -37,6 +37,11 @@ FILES =	main \
 		$(PARSE)parse_utils \
 		$(PARSE)parse_lib_utils \
 		$(EXECUTE)execute_main \
+		$(EXECUTE)execute_heredoc \
+		$(EXECUTE)execute_pipe \
+		$(EXECUTE)execute_redir \
+		$(EXECUTE)execute_non_builtin \
+		$(EXECUTE)execute_utils \
 		$(EXECUTE)execute_builtin \
 
 INCS_DIR = ./incs
