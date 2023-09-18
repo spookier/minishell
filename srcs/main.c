@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 03:51:54 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/18 05:10:26 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ void	signal_handler(int signo)
 		if (pid == CHILD)
 			printf("Quit\n");
 		else
-		{
-			rl_redisplay();
 			g_exit_code = 127;
-		}	
 	}
 }
 
@@ -98,7 +95,6 @@ int	minishell_main(t_data **cmd, char **env)
 			continue ;
 		}
 		exec_main(cmd, env);
-		// free(rdline);
 		free_cmd(cmd);
 	}
 }

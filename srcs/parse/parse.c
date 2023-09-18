@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 02:35:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/15 04:53:31 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/18 05:03:52 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ t_data	**parse(t_data **cmd, char **env, char *rdline)
 			return (free_2d_arr(split_pipe), NULL);
 	}
 	free_2d_arr(split_pipe);
-	free(rdline);//
+	free(rdline);
 	return (cmd);
 }
