@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:42:19 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/15 03:42:47 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/18 04:46:24 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	write_heredoc(int fd_heredoc, char *delim)
 		line = readline("> ");
 		if (!line)
 		{
-			printf("%sminishell: warning: here-document delimited by end-of-file%s\n", RED, BLACK);
+			stderr_msg("minishell: warning: ");
+			stderr_msg("here-document delimited by end-of-file\n");
 			break ;
 		}
 		if (ft_strncmp(line, delim, ft_strlen(delim)) == 0

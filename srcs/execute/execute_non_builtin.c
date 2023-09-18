@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:42:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/15 03:43:06 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/18 04:50:36 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*gain_env_value(char *key, char **env)
 {
-	int	i;
+	int		i;
 	char	*value;
 
 	i = 0;
@@ -50,15 +50,15 @@ char	*find_cmd_path(t_data *cmd, char **env)
 		if (access(cmd_with_path, F_OK) == 0)
 		{
 			free(path_value);
-			free_2d_arr(splited_path);
-			return (cmd_with_path);
+			return (free_2d_arr(splited_path), cmd_with_path);
 		}
 		free(cmd_with_path);
 		i++;
 	}
 	free(path_value);
-	free_2d_arr(splited_path);
-	return (NULL);
+	if (access(cmd->command, F_OK) == 0)
+		return (free_2d_arr(splited_path), cmd->command);
+	return (free_2d_arr(splited_path), NULL);
 }
 
 void	execute_non_builtin(t_data *cmd, char *cmd_with_path, char **env)
@@ -73,31 +73,35 @@ void	execute_non_builtin(t_data *cmd, char *cmd_with_path, char **env)
 	while (cmd->option[i])
 	{
 		argv = ft_realloc(argv, (i + 2) * sizeof(char *),
-			(i + 3) * sizeof(char *));
+				(i + 3) * sizeof(char *));
 		argv[i + 1] = ft_strdup(cmd->option[i]);
 		i++;
 	}
 	execve(cmd_with_path, argv, env);
-	free_2d_arr(argv);
 	free(cmd_with_path);
+	free_2d_arr(argv);
 	stat(cmd->command, &buf);
 	if (S_ISDIR(buf.st_mode))
-		printf("%sminishell: Is a directory%s\n", RED, BLACK);
+		stderr_msg("minishell: Is a directory\n");
 }
 
 void	non_builtin(t_data *cmd, char **env)
 {
 	char	*cmd_with_path;
-	
+
 	cmd_with_path = find_cmd_path(cmd, env);
-	if (cmd_with_path == NULL)
+	if (!cmd_with_path)
 	{
-		if (find_c_pos(cmd->command, '/', 0) != -1)
-			printf("%sminishell: No such file or directory%s\n", RED, BLACK);
+		if (cmd->command[0] == '.' || ft_strchr(cmd->command, '/'))
+			stderr_msg("minishell: No such file or directory\n");
 		else
-			printf("%s%s: command not found%s\n", RED, cmd->command, BLACK);
+		{
+			stderr_msg("minishell: ");
+			stderr_msg(cmd->command);
+			stderr_msg(": command not found\n");
+		}
 		cmd->exit = 127;
-		return ;
+		exit(127);
 	}
 	execute_non_builtin(cmd, cmd_with_path, env);
 }
