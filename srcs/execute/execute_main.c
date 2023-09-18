@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:28:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 04:55:58 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/18 05:18:30 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	execute_cmd(t_data **cmd_struct,
 	else if ((!ft_strncmp(cmd->command, "exit", 4)
 			&& ft_strlen(cmd->command) == 4))
 		builtin_exit(cmd_struct, cmd, env, _pipe);
-	else if (!is_builtin_cmd(cmd->command))
+	else
 		non_builtin(cmd, env);
-	// if (cmd->pid == 0)
-	// 	exit(cmd->exit);
+	if (cmd->pid == 0)
+		exit(cmd->exit);
 }
 
 void	wait_pid(t_data **cmd)
