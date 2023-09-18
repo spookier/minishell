@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/15 03:40:15 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/18 05:00:49 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@
 # define KEY			0
 # define VALUE			1
 # define TEMP			2
+
+# define CHILD			0
+# define PARENTS		1
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -137,7 +140,8 @@ void		free_cmd(t_data **cmd);
 
 /* 🐥 execute 🐥 */
 /* execute_main.c */
-void		execute_cmd(t_data *cmd, char **env);
+void		execute_cmd(t_data **cmd_struct,
+				t_data *cmd, char **env, int (*_pipe)[2]);
 void		wait_pid(t_data **cmd);
 void		exec_main(t_data **cmd, char **env);
 
@@ -145,13 +149,41 @@ void		exec_main(t_data **cmd, char **env);
 void		write_heredoc(int fd_heredoc, char *delim);
 void		check_heredoc(t_data **cmd);
 
-/* execute_pipe.c */
+/* execute_pipe_fd.c */
 void		alloc_pipe(t_data **cmd, int (**_pipe)[2]);
 void		close_pipe(t_data **cmd, int (**_pipe)[2]);
+void		set_fd_close_pipe(t_data **cmd, int (**_pipe)[2], int i);
+void		set_fd_stdio(int *fd);
+void		close_fd_stdio(int *fd);
 
 /* execute_redir.c */
 int			redir_open_file(int *in_fd, int *out_fd, t_data *cmd);
 int			redir_set_fd(t_data *cmd);
+
+/* execute_builtin_echo.c */
+void		builtin_echo(t_data *cmd);
+
+/* execute_builtin_env.c */
+void		builtin_env(char **env);
+
+/* execute_builtin_unset.c */
+void		builtin_unset(t_data *cmd, char **env);
+
+/* execute_builtin_export.c */
+void		builtin_export(t_data *cmd, char **env);
+
+/* execute_builtin_cd.c */
+void		builtin_cd(t_data *cmd, char **env);
+
+/* execute_builtin_pwd.c */
+void		builtin_pwd(void);
+
+/* execute_builtin_exit.c */
+long long	ft_atolonglong(char *str);
+int			is_num_str(char *str);
+void		free_before_exit(t_data **cmd_struct, char **env, int (*_pipe)[2]);
+void		builtin_exit(t_data **cmd_struct,
+				t_data *cmd, char **env, int (*_pipe)[2]);
 
 /* execute_non_builtin.c */
 char		*gain_env_value(char *key, char **env);
@@ -162,10 +194,6 @@ void		non_builtin(t_data *cmd, char **env);
 int			is_builtin_cmd(char *command);
 char		*append_str_to_alloced_str(char *str1, char *str2);
 char		*append_num_to_alloced_str(char *str1, int i);
-
-
-void		exit_builtin(t_data *cmd);
-void		echo_builtin(t_data *cmd);
-
+void		stderr_msg(char *str);
 
 #endif

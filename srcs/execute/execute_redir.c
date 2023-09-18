@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:43:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/15 03:43:48 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/18 04:52:42 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	redir_open_file(int *in_fd, int *out_fd, t_data *cmd)
 		*in_fd = open(cmd->redir->file_name, O_RDONLY);
 		if (*in_fd == -1)
 		{
-			printf("%sminishell: No such file or directory%s\n", RED, BLACK);
+			stderr_msg("minishell: No such file or directory\n");
 			if (cmd->pid == 0)
 				exit(1);
 			cmd->exit = 1;
@@ -27,9 +27,11 @@ int	redir_open_file(int *in_fd, int *out_fd, t_data *cmd)
 		}
 	}
 	if (cmd->redir->redir_flag == OUT)
-		*out_fd = open(cmd->redir->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+		*out_fd = open(cmd->redir->file_name,
+				O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (cmd->redir->redir_flag == APPEND)
-		*out_fd = open(cmd->redir->file_name, O_CREAT | O_WRONLY | O_APPEND, 0664);
+		*out_fd = open(cmd->redir->file_name,
+				O_CREAT | O_WRONLY | O_APPEND, 0664);
 	return (1);
 }
 

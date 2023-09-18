@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/15 03:41:06 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/18 03:51:54 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	signal_handler(int signo)
 	pid = waitpid(-1, &status, WNOHANG);
 	if (signo == SIGINT)
 	{
-		if (pid == 0)
+		if (pid == CHILD)
 			printf("\n");
 		else
 		{
@@ -58,11 +58,10 @@ void	signal_handler(int signo)
 	}
 	else if (signo == SIGQUIT)
 	{
-		if (pid == 0)
+		if (pid == CHILD)
 			printf("Quit\n");
 		else
 		{
-			rl_on_new_line();
 			rl_redisplay();
 			g_exit_code = 127;
 		}	
@@ -99,7 +98,7 @@ int	minishell_main(t_data **cmd, char **env)
 			continue ;
 		}
 		exec_main(cmd, env);
-		free(rdline);
+		// free(rdline);
 		free_cmd(cmd);
 	}
 }

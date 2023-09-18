@@ -6,7 +6,7 @@
 #    By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:50:04 by yhwang            #+#    #+#              #
-#    Updated: 2023/09/15 03:45:59 by yhwang           ###   ########.fr        #
+#    Updated: 2023/09/18 04:54:56 by yhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,11 +38,17 @@ FILES =	main \
 		$(PARSE)parse_lib_utils \
 		$(EXECUTE)execute_main \
 		$(EXECUTE)execute_heredoc \
-		$(EXECUTE)execute_pipe \
+		$(EXECUTE)execute_pipe_fd \
 		$(EXECUTE)execute_redir \
+		$(EXECUTE)execute_builtin_echo \
+		$(EXECUTE)execute_builtin_env \
+		$(EXECUTE)execute_builtin_unset \
+		$(EXECUTE)execute_builtin_export \
+		$(EXECUTE)execute_builtin_cd \
+		$(EXECUTE)execute_builtin_pwd \
+		$(EXECUTE)execute_builtin_exit \
 		$(EXECUTE)execute_non_builtin \
-		$(EXECUTE)execute_utils \
-		$(EXECUTE)execute_builtin \
+		$(EXECUTE)execute_utils
 
 INCS_DIR = ./incs
 

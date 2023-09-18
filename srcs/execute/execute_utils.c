@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:43:54 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/15 03:44:01 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/18 04:53:02 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_builtin_cmd(char *command)
 char	*append_str_to_alloced_str(char *str1, char *str2)
 {
 	char	*res;
-	int	i;
+	int		i;
 
 	res = ft_calloc(sizeof(char *), (ft_strlen(str1) + ft_strlen(str2) + 1));
 	i = 0;
@@ -51,7 +51,7 @@ char	*append_num_to_alloced_str(char *str1, int num)
 {
 	char	*res;
 	char	*tmp;
-	int	i;
+	int		i;
 
 	tmp = ft_itoa(num);
 	res = ft_calloc(sizeof(char *), ft_strlen(str1) + ft_strlen(tmp) + 1);
@@ -70,4 +70,11 @@ char	*append_num_to_alloced_str(char *str1, int num)
 	free(str1);
 	free(tmp);
 	return (res);
+}
+
+void	stderr_msg(char *str)
+{
+	ft_putstr_fd(RED, STDERR);
+	ft_putstr_fd(str, STDERR);
+	ft_putstr_fd(BLACK, STDERR);
 }
