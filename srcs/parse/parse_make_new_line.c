@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 04:08:24 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/12 22:30:34 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/18 05:04:23 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*put_space(char *line, int i, int redir_len, char redir)
 	char	*str[5];
 
 	str[0] = ft_substr(line, 0, i);
-	str[1] = ft_substr(line, i + redir_len, ft_strlen(line) - 1);	
+	str[1] = ft_substr(line, i + redir_len, ft_strlen(line) - 1);
 	if (redir == '>')
 	{
 		if (redir_len == 1)
@@ -118,7 +118,6 @@ char	*redir_put_space(char *line)
 char	*make_new_line(char **env, char *rdline)
 {
 	char	*line;
-	
 
 	line = ft_strdup(rdline);
 	remove_dollar(line);

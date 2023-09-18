@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:21 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 04:58:35 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/18 05:08:04 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 
 void	builtin_unset(t_data *cmd, char **env)
 {
-	
+	(void)cmd;
+	(void)env;
 }
