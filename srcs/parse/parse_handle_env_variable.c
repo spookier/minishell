@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 04:02:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/20 16:27:39 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/20 16:32:32 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,12 @@ void	handle_env_var_norminette(int *quote)
 char	*handle_env_var(char **env, char *line)
 {
 	int	i;
-	int	temp;
 	int	quote;
 
 	i = 0;
 	quote = 0;
 	while (line[i] != '\0')
 	{
-		temp = ft_strlen(line);
 		if (line[i] == '"')
 			quote++;
 		handle_env_var_norminette(&quote);

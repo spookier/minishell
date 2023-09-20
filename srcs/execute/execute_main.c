@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:28:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 05:18:30 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/20 16:40:14 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	wait_pid(t_data **cmd)
 	int	status;
 
 	i = 0;
+	status = 0;
 	while (cmd[i])
 	{
 		if (cmd[i + 1])
