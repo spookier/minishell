@@ -6,14 +6,13 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:28:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/20 16:40:14 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/20 17:46:15 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	execute_cmd(t_data **cmd_struct,
-			t_data *cmd, char **env, int (*_pipe)[2])
+void	execute_cmd(t_data *cmd, char **env)
 {
 	if ((!ft_strncmp(cmd->command, "echo", 4)
 			&& ft_strlen(cmd->command) == 4))
@@ -35,7 +34,7 @@ void	execute_cmd(t_data **cmd_struct,
 		builtin_pwd();
 	else if ((!ft_strncmp(cmd->command, "exit", 4)
 			&& ft_strlen(cmd->command) == 4))
-		builtin_exit(cmd_struct, cmd, env, _pipe);
+		builtin_exit(cmd);
 	else
 		non_builtin(cmd, env);
 	if (cmd->pid == 0)
@@ -59,6 +58,8 @@ void	wait_pid(t_data **cmd)
 			if (WIFEXITED(status))
 			{
 				g_exit_code = WEXITSTATUS(status);
+				if (!g_exit_code)
+					g_exit_code = cmd[i]->exit;
 				return ;
 			}
 		}
@@ -86,7 +87,7 @@ void	exec_main(t_data **cmd, char **env)
 			set_fd_close_pipe(cmd, &_pipe, i);
 			set_fd_stdio(fd);
 			if (redir_set_fd(cmd[i]))
-				execute_cmd(cmd, cmd[i], env, _pipe);
+				execute_cmd(cmd[i], env);
 			close_fd_stdio(fd);
 		}
 	}
