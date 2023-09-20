@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:21 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/20 18:15:53 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/20 18:29:19 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	compare_env_var_name(char *env, char *str)
 	if (ft_strcmp(env_to_find, str) == 0)
 	{
 		free(env_to_find);
-		printf("------------------- COMMAND FOUND!\n");
 		return (1);
 	}
 	free(env_to_find);
