@@ -33,7 +33,6 @@ int	compare_env_var_name(char *env, char *str)
 	if (ft_strcmp(env_to_find, str) == 0)
 	{
 		free(env_to_find);
-		printf("------------------- COMMAND FOUND!\n");
 		return (1);
 	}
 	free(env_to_find);
