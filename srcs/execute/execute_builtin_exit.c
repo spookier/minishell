@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:52:45 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 04:44:38 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/20 17:49:27 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,8 @@ int	is_num_str(char *str)
 	return (1);
 }
 
-void	free_before_exit(t_data **cmd_struct, char **env, int (*_pipe)[2])
-{
-	close_pipe(cmd_struct, &_pipe);
-	free((*_pipe));
-	free_cmd(cmd_struct);
-	free_2d_arr(env);
-}
 
-void	builtin_exit(t_data **cmd_struct,
-			t_data *cmd, char **env, int (*_pipe)[2])
+void	builtin_exit(t_data *cmd)
 {
 	int	exit_status;
 
@@ -82,11 +74,11 @@ void	builtin_exit(t_data **cmd_struct,
 		else if (cmd->option[1])
 		{
 			stderr_msg("minishell: exit: too many arguments\n");
-			exit_status = 1;
+			cmd->exit = 1;
+			return ;
 		}
 		else
 			exit_status = (long)ft_atolonglong(cmd->option[0]);
 	}
-	free_before_exit(cmd_struct, env, _pipe);
 	exit(exit_status);
 }

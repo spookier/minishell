@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/20 15:55:09 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/20 17:45:52 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,7 @@ void		free_cmd(t_data **cmd);
 
 /* 🐥 execute 🐥 */
 /* execute_main.c */
-void		execute_cmd(t_data **cmd_struct,
-				t_data *cmd, char **env, int (*_pipe)[2]);
+void		execute_cmd(t_data *cmd, char **env);
 void		wait_pid(t_data **cmd);
 void		exec_main(t_data **cmd, char **env);
 
@@ -181,9 +180,7 @@ void		builtin_pwd(void);
 /* execute_builtin_exit.c */
 long long	ft_atolonglong(char *str);
 int			is_num_str(char *str);
-void		free_before_exit(t_data **cmd_struct, char **env, int (*_pipe)[2]);
-void		builtin_exit(t_data **cmd_struct,
-				t_data *cmd, char **env, int (*_pipe)[2]);
+void		builtin_exit(t_data *cmd);
 
 /* execute_non_builtin.c */
 char		*gain_env_value(char *key, char **env);
