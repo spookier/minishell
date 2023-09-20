@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:42:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 04:50:36 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/20 17:23:50 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,28 @@ char	*find_cmd_path(t_data *cmd, char **env)
 	splited_path = ft_split(path_value, ':');
 	cmd_with_path = NULL;
 	i = 0;
-	while (splited_path[i])
+	while (splited_path && splited_path[i])
 	{
 		splited_path[i] = append_str_to_alloced_str(splited_path[i], "/");
 		cmd_with_path = ft_strjoin(splited_path[i], cmd->command);
 		if (access(cmd_with_path, F_OK) == 0)
 		{
 			free(path_value);
-			return (free_2d_arr(splited_path), cmd_with_path);
+			if (splited_path)
+				free_2d_arr(splited_path);
+			return (cmd_with_path);
 		}
 		free(cmd_with_path);
 		i++;
 	}
 	free(path_value);
+	if (splited_path)
+		free_2d_arr(splited_path);
 	if (access(cmd->command, F_OK) == 0)
-		return (free_2d_arr(splited_path), cmd->command);
-	return (free_2d_arr(splited_path), NULL);
+		return (cmd->command);
+	return (NULL);
 }
+
 
 void	execute_non_builtin(t_data *cmd, char *cmd_with_path, char **env)
 {
