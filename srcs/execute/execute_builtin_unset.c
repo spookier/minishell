@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:21 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 05:08:04 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/20 18:15:53 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 int	compare_env_var_name(char *env, char *str)
 {
-	int i;
-	char *env_to_find;
+	int		i;
+	char	*env_to_find;
 
 	i = 0;
-	while(env[i] && env[i] != '=')
+	while (env[i] && env[i] != '=')
 		i++;
 	env_to_find = malloc((sizeof(char) * i) + 1);
-	if(!env_to_find)
-		return(0);
+	if (!env_to_find)
+		return (0);
 	i = 0;
-	while(env[i] && env[i] != '=')
+	while (env[i] && env[i] != '=')
 	{
 		env_to_find[i] = env[i];
 		i++;
 	}
 	env_to_find[i] = 0x00;
-	if(ft_strcmp(env_to_find, str) == 0)
+	if (ft_strcmp(env_to_find, str) == 0)
 	{
 		free(env_to_find);
 		printf("------------------- COMMAND FOUND!\n");
-		return(1);
+		return (1);
 	}
 	free(env_to_find);
 	return (0);
@@ -42,10 +42,10 @@ int	compare_env_var_name(char *env, char *str)
 
 void	builtin_unset(t_data *cmd, char **env)
 {
-	int i;
-	int j;
-	int k;
-	
+	int	i;
+	int	j;
+	int	k;
+
 	k = 0;
 	while (cmd->option && cmd->option[k])
 	{
