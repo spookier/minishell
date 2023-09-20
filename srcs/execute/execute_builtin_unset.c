@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-int compare_env_var_name(char *env, char *str)
+int	compare_env_var_name(char *env, char *str)
 {
 	int i;
 	char *env_to_find;
@@ -42,23 +42,29 @@ int compare_env_var_name(char *env, char *str)
 
 void	builtin_unset(t_data *cmd, char **env)
 {
-	int	i;
+	int i;
 	int j;
-
-	i = 0;
-	while (env[i])
+	int k;
+	
+	k = 0;
+	while (cmd->option && cmd->option[k])
 	{
-		if(compare_env_var_name(env[i], cmd->option[0]) == 1)
+		i = 0;
+		while (env[i])
 		{
-			free(env[i]);
-			j = i;
-			while(env[j])
+			if (compare_env_var_name(env[i], cmd->option[k]) == 1)
 			{
-				env[j] = env[j + 1];
-				j++;
+				free(env[i]);
+				j = i;
+				while (env[j])
+				{
+					env[j] = env[j + 1];
+					j++;
+				}
 			}
+			else
+				i++;
 		}
-		else
-			i++;
+		k++;
 	}
 }
