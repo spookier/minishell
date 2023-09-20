@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 05:26:07 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/20 16:27:32 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	signal_handler(int signo)
 			printf("\n");
 			rl_on_new_line();
 			rl_replace_line("", 0);
-			rl_redisplay();	
+			rl_redisplay();
 		}
 		g_exit_code = 130;
 	}
