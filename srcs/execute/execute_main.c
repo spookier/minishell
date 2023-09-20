@@ -48,6 +48,7 @@ void	wait_pid(t_data **cmd)
 	int	status;
 
 	i = 0;
+	status = 0;
 	while (cmd[i])
 	{
 		if (cmd[i + 1])
