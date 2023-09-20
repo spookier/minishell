@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:52:45 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/20 17:49:27 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/20 18:13:37 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	is_num_str(char *str)
 	}
 	return (1);
 }
-
 
 void	builtin_exit(t_data *cmd)
 {
