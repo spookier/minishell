@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:25 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 05:07:53 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/20 13:59:46 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,12 @@
 
 void	builtin_env(char **env)
 {
-	(void)env;
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
 }

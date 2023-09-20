@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:56:18 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 05:07:42 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/20 14:08:40 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,28 @@
 
 void	builtin_echo(t_data *cmd)
 {
-	(void)cmd;
+	int	flag_option_n;
+	int	i;
+
+	if (cmd->option[0] && !ft_strncmp(cmd->option[0], "-n", 2)
+		&& ft_strlen(cmd->option[0]) == 2)
+	{
+		flag_option_n = 1;
+		i = 1;
+	}
+	else
+	{
+		flag_option_n = 0;
+		i = 0;
+	}
+	while (cmd->option[i])
+	{
+		if (i > 0)
+			printf(" ");
+		printf("%s", cmd->option[i]);
+		i++;
+	}
+	if (!flag_option_n)
+		printf("\n");
+	cmd->exit = 0;
 }
