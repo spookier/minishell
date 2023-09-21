@@ -1,0 +1,12 @@
+{
+	"files.associations": {
+		"limits.h": "c",
+		"errno.h": "c",
+		"wait.h": "c",
+		"string.h": "c",
+		"history.h": "c",
+		"signal.h": "c",
+		"signum-generic.h": "c",
+		"sig_atomic_t.h": "c"
+	}
+}

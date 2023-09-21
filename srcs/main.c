@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 21:55:38 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 23:55:09 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,13 @@ void	signal_handler(int signo)
 	{
 		if (pid == CHILD)
 			printf("Quit\n");
-		else
-			printf("%sminishell$ %s", CYAN, BLACK);
 	}
 }
 
 void	signal_detect(void)
 {
 	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 int	minishell_main(t_data **cmd, char **env)
