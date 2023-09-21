@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:11 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 16:00:21 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 20:15:55 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	update_pwd_oldpwd(char ***env, char *absolute_path)
 
 	pwd = ft_strjoin("PWD=", absolute_path);
 	oldpwd = NULL;
-	i = -1;
 	*env = remove_element_from_env(*env, "OLDPWD");
+	i = -1;
 	while ((*env)[++i])
 	{
 		if (!ft_strncmp((*env)[i], "PWD", 3) && (*env)[i][3] == '=')

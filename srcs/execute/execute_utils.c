@@ -6,13 +6,13 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:43:54 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 14:37:50 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 18:55:01 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-char	**remove_element_from_env(char **env, char *element_to_remove)
+char	**remove_element_from_env(char **env, char *to_remove)
 {
 	char	**new_env;
 	int		flag;
@@ -23,8 +23,8 @@ char	**remove_element_from_env(char **env, char *element_to_remove)
 	i = -1;
 	while (env[++i])
 	{
-		if ((!ft_strncmp(env[i], element_to_remove, ft_strlen(element_to_remove))
-			&& env[i][ft_strlen(element_to_remove)] == '='))
+		if ((!ft_strncmp(env[i], to_remove, ft_strlen(to_remove))
+			&& env[i][ft_strlen(to_remove)] == '='))
 			flag++;
 	}
 	if (!flag)
@@ -34,12 +34,11 @@ char	**remove_element_from_env(char **env, char *element_to_remove)
 	j = 0;
 	while (env[++i])
 	{
-		if (!(!ft_strncmp(env[i], element_to_remove, ft_strlen(element_to_remove))
-			&& env[i][ft_strlen(element_to_remove)] == '='))
+		if (!(!ft_strncmp(env[i], to_remove, ft_strlen(to_remove))
+			&& env[i][ft_strlen(to_remove)] == '='))
 			new_env[j++] = ft_strdup(env[i]);
 	}
-	free_2d_arr(env);
-	return (new_env);
+	return (free_2d_arr(env), new_env);
 }
 
 int	is_builtin_cmd(char *command)

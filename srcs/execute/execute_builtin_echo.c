@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:56:18 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/20 14:08:40 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 19:01:17 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	builtin_echo(t_data *cmd)
 	}
 	while (cmd->option[i])
 	{
-		if (i > 0)
+		if ((i > 0 && !cmd->option[0]) || (i > 1 && cmd->option[0]))
 			printf(" ");
 		printf("%s", cmd->option[i]);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 15:50:22 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 19:43:14 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ void		builtin_unset(t_data *cmd, char **env);
 void		builtin_export(t_data *cmd, char ***env);
 
 /* execute_builtin_cd.c */
+void		add_element_to_env(char ***env, char *element_to_add);
 void		builtin_cd(t_data *cmd, char ***env);
 
 /* execute_builtin_pwd.c */
@@ -188,7 +189,7 @@ char		*find_cmd_path(t_data *cmd, char **env);
 void		non_builtin(t_data *cmd, char **env);
 
 /* execute_utils.c */
-char		**remove_element_from_env(char **env, char *element_to_remove);
+char		**remove_element_from_env(char **env, char *to_remove);
 int			is_builtin_cmd(char *command);
 char		*append_str_to_alloced_str(char *str1, char *str2);
 char		*append_num_to_alloced_str(char *str1, int i);
