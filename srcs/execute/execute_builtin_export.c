@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:15 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/20 18:28:55 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 15:50:15 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int check_if_env_exists(char *env, char *str)
 	}
 }
 
-void	builtin_export(t_data *cmd, char **env)
+void	builtin_export(t_data *cmd, char ***env)
 {
 	int i;
 	int k;
@@ -53,9 +53,9 @@ void	builtin_export(t_data *cmd, char **env)
 	while (cmd->option && cmd->option[k])
 	{
 		i = 0;
-		while (env[i])
+		while ((*env)[i])
 		{
-			if (check_if_env_exists(env[i], cmd->option[k]) == 1)
+			if (check_if_env_exists((*env)[i], cmd->option[k]) == 1)
 			{
 				// MODIFY EXISTING ENV VALUE HERE
 				printf("Export command already exists\n");
@@ -63,7 +63,7 @@ void	builtin_export(t_data *cmd, char **env)
 			}
 			i++;
 		}
-		if(check_if_env_exists(env[i], cmd->option[k]) == 0)
+		if(check_if_env_exists((*env)[i], cmd->option[k]) == 0)
 		{
 			printf("NEW ENV ADDED\n");
 		}

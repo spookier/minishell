@@ -6,23 +6,23 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:28:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/20 17:46:15 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 15:49:48 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	execute_cmd(t_data *cmd, char **env)
+void	execute_cmd(t_data *cmd, char ***env)
 {
 	if ((!ft_strncmp(cmd->command, "echo", 4)
 			&& ft_strlen(cmd->command) == 4))
 		builtin_echo(cmd);
 	else if ((!ft_strncmp(cmd->command, "env", 3)
 			&& ft_strlen(cmd->command) == 3))
-		builtin_env(env);
+		builtin_env(*env);
 	else if ((!ft_strncmp(cmd->command, "unset", 5)
 			&& ft_strlen(cmd->command) == 5))
-		builtin_unset(cmd, env);
+		builtin_unset(cmd, *env);
 	else if ((!ft_strncmp(cmd->command, "export", 6)
 			&& ft_strlen(cmd->command) == 6))
 		builtin_export(cmd, env);
@@ -36,7 +36,7 @@ void	execute_cmd(t_data *cmd, char **env)
 			&& ft_strlen(cmd->command) == 4))
 		builtin_exit(cmd);
 	else
-		non_builtin(cmd, env);
+		non_builtin(cmd, *env);
 	if (cmd->pid == 0)
 		exit(cmd->exit);
 }
@@ -67,7 +67,7 @@ void	wait_pid(t_data **cmd)
 	}
 }
 
-void	exec_main(t_data **cmd, char **env)
+void	exec_main(t_data **cmd, char ***env)
 {
 	int	(*_pipe)[2];
 	int	fd[2];

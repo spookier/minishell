@@ -6,11 +6,41 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:43:54 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 04:53:02 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 14:37:50 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+char	**remove_element_from_env(char **env, char *element_to_remove)
+{
+	char	**new_env;
+	int		flag;
+	int		i;
+	int		j;
+
+	flag = 0;
+	i = -1;
+	while (env[++i])
+	{
+		if ((!ft_strncmp(env[i], element_to_remove, ft_strlen(element_to_remove))
+			&& env[i][ft_strlen(element_to_remove)] == '='))
+			flag++;
+	}
+	if (!flag)
+		return (env);
+	new_env = (char **)ft_calloc(sizeof(char *), i);
+	i = -1;
+	j = 0;
+	while (env[++i])
+	{
+		if (!(!ft_strncmp(env[i], element_to_remove, ft_strlen(element_to_remove))
+			&& env[i][ft_strlen(element_to_remove)] == '='))
+			new_env[j++] = ft_strdup(env[i]);
+	}
+	free_2d_arr(env);
+	return (new_env);
+}
 
 int	is_builtin_cmd(char *command)
 {
