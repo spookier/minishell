@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:28:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 22:27:23 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/22 01:53:29 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	execute_cmd(t_data *cmd, char ***env)
 		builtin_exit(cmd);
 	else
 		non_builtin(cmd, *env);
-	if (cmd->pid == 0)
+	if (cmd->pid == CHILD)
 		exit(cmd->exit);
 }
 
@@ -67,6 +67,12 @@ void	wait_pid(t_data **cmd)
 	}
 }
 
+void	norminette_exec_main(t_data **cmd, int (*_pipe)[2])
+{
+	close_pipe(cmd, &_pipe);
+	free((*_pipe));
+}
+
 void	exec_main(t_data **cmd, char ***env)
 {
 	int	(*_pipe)[2];
@@ -92,7 +98,6 @@ void	exec_main(t_data **cmd, char ***env)
 			close_fd_stdio(fd);
 		}
 	}
-	close_pipe(cmd, &_pipe);
-	free((*_pipe));
+	norminette_exec_main(cmd, _pipe);
 	wait_pid(cmd);
 }

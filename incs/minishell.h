@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 21:51:40 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/22 01:54:09 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ t_data		**parse(t_data **cmd, char **env, char *rdline);
 
 /* parse_token_error_1.c */
 int			token_quote_err(char *line);
+void		convert_inside_quote(char *line, int i);
 int			token_pipe_err(char *line, int i);
 int			token_ampersand_err(char *line, int i);
 int			token_err(char *line);
@@ -125,12 +126,15 @@ void		handle_env_var_norminette(int *quote);
 char		*handle_env_var(char **env, char *line);
 
 /* parse_fill_cmd_struct.c */
+void		revert_cmd(char **split_each_cmd);
 int			is_redir(char *str);
 void		fill_option(t_data **cmd, char **split_cmd, int cmd_i);
+t_data		**fill_cmd_struct(t_data **cmd, char *each_cmd, int cmd_i);
+
+/* parse_fill_cmd_check_redir.c */
 void		fill_redir(t_data **cmd, char **split_cmd, int cmd_i);
 void		check_redir(t_data **cmd,
 				char *each_cmd, char **split_cmd, int cmd_i);
-t_data		**fill_cmd_struct(t_data **cmd, char *each_cmd, int cmd_i);
 
 /* parse_utils.c */
 void		minishell_header(void);
@@ -147,6 +151,7 @@ void		free_cmd(t_data **cmd);
 /* execute_main.c */
 void		execute_cmd(t_data *cmd, char ***env);
 void		wait_pid(t_data **cmd);
+void		norminette_exec_main(t_data **cmd, int (*_pipe)[2]);
 void		exec_main(t_data **cmd, char ***env);
 
 /* execute_heredoc.c */
@@ -171,13 +176,19 @@ void		builtin_echo(t_data *cmd);
 void		builtin_env(char **env);
 
 /* execute_builtin_unset.c */
+int			compare_env_var_name(char *env, char *str);
 void		builtin_unset(t_data *cmd, char **env);
 
 /* execute_builtin_export.c */
+void		run_export_no_option(char **env);
+void		run_export(char ***env, char *key_value);
 void		builtin_export(t_data *cmd, char ***env);
 
 /* execute_builtin_cd.c */
+char		*get_env_value(char **env, char *key);
 void		add_element_to_env(char ***env, char *element_to_add);
+void		update_pwd_oldpwd(char ***env, char *absolute_path);
+void		run_cd(t_data *cmd, char ***env, char *option);
 void		builtin_cd(t_data *cmd, char ***env);
 
 /* execute_builtin_pwd.c */
@@ -191,6 +202,7 @@ void		builtin_exit(t_data *cmd);
 /* execute_non_builtin.c */
 char		*gain_env_value(char *key, char **env);
 char		*find_cmd_path(t_data *cmd, char **env);
+void		execute_non_builtin(t_data *cmd, char *cmd_with_path, char **env);
 void		non_builtin(t_data *cmd, char **env);
 
 /* execute_utils.c */
