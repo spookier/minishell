@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 04:11:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 21:50:49 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/22 00:56:58 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,26 @@ int	token_quote_err(char *line)
 	return (0);
 }
 
+void	convert_inside_quote(char *line, int i)
+{
+	int		quote;
+	int		j;
+
+	quote = line[i];
+	j = i;
+	while (line[++j] != quote)
+	{
+		if (line[j] == '|')
+			line[j] = _PIPE;
+		else if (line[j] == '<')
+			line[j] = _IN;
+		else if (line[j] == '>')
+			line[j] = _OUT;
+		else if (line[j] == ' ')
+			line[j] = _SPACE;
+	}
+}
+
 int	token_pipe_err(char *line, int i)
 {
 	if (line[i + 1] && (line[i + 1] != ' ' && !ft_isalnum(line[i + 1])))
@@ -62,28 +82,14 @@ int	token_ampersand_err(char *line, int i)
 int	token_err(char *line)
 {
 	int		i;
-	int		j;
 	int		pos;
-	int		quote;
 
 	i = 0;
 	while (line[i] != '\0')
 	{
 		if (line[i] == '\'' || line[i] == '"')
 		{
-			quote = line[i];
-			j = i;
-			while (line[++j] != quote)
-			{
-				if (line[j] == '|')
-					line[j] = _PIPE;
-				else if (line[j] == '<')
-					line[j] = _IN;
-				else if (line[j] == '>')
-					line[j] = _OUT;
-				else if (line[j] == ' ')
-					line[j] = _SPACE;
-			}
+			convert_inside_quote(line, i);
 			i++;
 			pos = find_c_pos(line, line[i - 1], i);
 			i = (pos + 1);

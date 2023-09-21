@@ -6,13 +6,13 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:11 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 20:15:55 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/22 01:04:11 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-char *get_env_value(char **env, char *key)
+char	*get_env_value(char **env, char *key)
 {
 	char	*value;
 	int		i;
@@ -21,7 +21,8 @@ char *get_env_value(char **env, char *key)
 	value = NULL;
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], key, ft_strlen(key)) && env[i][ft_strlen(key)] == '=')
+		if (!ft_strncmp(env[i], key, ft_strlen(key))
+			&& env[i][ft_strlen(key)] == '=')
 		{
 			value = ft_strdup(env[i]);
 			break ;
@@ -97,7 +98,6 @@ void	builtin_cd(t_data *cmd, char ***env)
 {
 	char	*home_value;
 
-	
 	if (!cmd->option[0])
 	{
 		home_value = get_env_value(*env, "HOME");

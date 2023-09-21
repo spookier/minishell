@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:43:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 04:52:42 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/22 01:37:44 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	redir_open_file(int *in_fd, int *out_fd, t_data *cmd)
 		if (*in_fd == -1)
 		{
 			stderr_msg("minishell: No such file or directory\n");
-			if (cmd->pid == 0)
+			if (cmd->pid == CHILD)
 				exit(1);
 			cmd->exit = 1;
 			return (0);

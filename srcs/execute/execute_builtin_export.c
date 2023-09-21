@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:15 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 20:16:57 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/22 01:04:46 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	run_export_no_option(char **env)
 {
-	int	i;
 	char	*key;
 	char	*value;
+	int		i;
 
 	i = 0;
 	while (env[i])
@@ -31,11 +31,10 @@ void	run_export_no_option(char **env)
 	}
 }
 
-
 void	run_export(char ***env, char *key_value)
 {
 	char	*key;
-	int	i;
+	int		i;
 
 	key = ft_substr(key_value, 0, find_c_pos(key_value, '=', 0));
 	i = -1;
@@ -71,5 +70,3 @@ void	builtin_export(t_data *cmd, char ***env)
 		}
 	}
 }
-	
-	

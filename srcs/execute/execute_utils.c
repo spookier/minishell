@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:43:54 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 18:55:01 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/22 01:05:15 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**remove_element_from_env(char **env, char *to_remove)
 	while (env[++i])
 	{
 		if ((!ft_strncmp(env[i], to_remove, ft_strlen(to_remove))
-			&& env[i][ft_strlen(to_remove)] == '='))
+				&& env[i][ft_strlen(to_remove)] == '='))
 			flag++;
 	}
 	if (!flag)
@@ -35,7 +35,7 @@ char	**remove_element_from_env(char **env, char *to_remove)
 	while (env[++i])
 	{
 		if (!(!ft_strncmp(env[i], to_remove, ft_strlen(to_remove))
-			&& env[i][ft_strlen(to_remove)] == '='))
+				&& env[i][ft_strlen(to_remove)] == '='))
 			new_env[j++] = ft_strdup(env[i]);
 	}
 	return (free_2d_arr(env), new_env);
