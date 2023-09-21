@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/20 16:27:32 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 15:57:43 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	**alloc_env(char **env)
 			return (free_2d_arr(env), NULL);
 		}
 	}
+	arr_env = remove_element_from_env(arr_env, "OLDPWD");
 	return (arr_env);
 }
 
@@ -94,9 +95,11 @@ int	minishell_main(t_data **cmd, char **env)
 			free(rdline);
 			continue ;
 		}
-		exec_main(cmd, env);
+		exec_main(cmd, &env);
 		free_cmd(cmd);
 	}
+	free_2d_arr(env);
+	return (0);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -113,7 +116,6 @@ int	main(int argc, char **argv, char **env)
 	minishell_header();
 	cmd = NULL;
 	if (minishell_main(cmd, env))
-		return (free_2d_arr(env), 1);
-	free_2d_arr(env);
+		return (1);
 	return (0);
 }

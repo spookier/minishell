@@ -6,7 +6,7 @@
 #    By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:50:04 by yhwang            #+#    #+#              #
-#    Updated: 2023/09/20 17:24:08 by yhwang           ###   ########.fr        #
+#    Updated: 2023/09/21 14:49:56 by yhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ LIBFT_DIR = ./libft
 LIBFT_NAME = libft.a
 LIBFT = $(addprefix $(LIBFT_DIR)/, $(LIBFT_NAME))
 
-PARSE = /parse/
-EXECUTE = /execute/
+PARSE = parse/
+EXECUTE = execute/
 
 FILES =	main \
 		$(PARSE)parse \

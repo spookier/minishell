@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:11 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/20 19:30:04 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 16:00:21 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,48 @@ char *get_env_value(char **env, char *key)
 	return (value);
 }
 
-void	run_cd(t_data *cmd, char **env, char *option)
+void	add_element_to_env(char ***env, char *element_to_add)
 {
-	//char	*dir;
-	char	path[1024];
+	char	**new_env;
+	int		i;
+
+	i = 0;
+	while ((*env)[i])
+		i++;
+	new_env = (char **)ft_calloc(sizeof(char *), i + 2);
+	i = -1;
+	while ((*env)[++i])
+		new_env[i] = ft_strdup((*env)[i]);
+	new_env[i] = element_to_add;
+	free_2d_arr(*env);
+	*env = new_env;
+}
+
+void	update_pwd_oldpwd(char ***env, char *absolute_path)
+{
+	char	*pwd;
+	char	*oldpwd;
+	int		i;
+
+	pwd = ft_strjoin("PWD=", absolute_path);
+	oldpwd = NULL;
+	i = -1;
+	*env = remove_element_from_env(*env, "OLDPWD");
+	while ((*env)[++i])
+	{
+		if (!ft_strncmp((*env)[i], "PWD", 3) && (*env)[i][3] == '=')
+		{
+			oldpwd = ft_strjoin("OLD", (*env)[i]);
+			free((*env)[i]);
+			(*env)[i] = oldpwd;
+		}
+	}
+	add_element_to_env(env, pwd);
+}
+
+void	run_cd(t_data *cmd, char ***env, char *option)
+{
+	char	absolute_path[1024];
 
 	if (chdir(option) == -1)
 	{
@@ -50,20 +88,19 @@ void	run_cd(t_data *cmd, char **env, char *option)
 	}
 	else
 	{
-		getcwd(path, sizeof(path));//to get absolute path to update env
-		printf("absolute path: %s\n", path);
+		getcwd(absolute_path, sizeof(absolute_path));
+		update_pwd_oldpwd(env, absolute_path);
 	}
-	(void)env;
 }
 
-void	builtin_cd(t_data *cmd, char **env)
+void	builtin_cd(t_data *cmd, char ***env)
 {
 	char	*home_value;
 
 	
 	if (!cmd->option[0])
 	{
-		home_value = get_env_value(env, "HOME");
+		home_value = get_env_value(*env, "HOME");
 		if (!home_value)
 		{
 			stderr_msg("minishell: cd: HOME not set\n");
