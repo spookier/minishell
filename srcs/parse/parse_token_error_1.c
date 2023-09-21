@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 04:11:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/23 01:27:36 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 21:50:49 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,28 @@ int	token_ampersand_err(char *line, int i)
 int	token_err(char *line)
 {
 	int		i;
+	int		j;
 	int		pos;
+	int		quote;
 
 	i = 0;
 	while (line[i] != '\0')
 	{
 		if (line[i] == '\'' || line[i] == '"')
 		{
+			quote = line[i];
+			j = i;
+			while (line[++j] != quote)
+			{
+				if (line[j] == '|')
+					line[j] = _PIPE;
+				else if (line[j] == '<')
+					line[j] = _IN;
+				else if (line[j] == '>')
+					line[j] = _OUT;
+				else if (line[j] == ' ')
+					line[j] = _SPACE;
+			}
 			i++;
 			pos = find_c_pos(line, line[i - 1], i);
 			i = (pos + 1);

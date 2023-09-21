@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 19:43:14 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 21:51:40 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,14 @@
 # define STDOUT			1
 # define STDERR			2
 
-# define SPACE			10
-# define PIPE			11
-# define END			14
+# define SPACE			1
+# define PIPE			2
+# define END			3
+
+# define _PIPE			10
+# define _IN			11
+# define _OUT			12
+# define _SPACE			13
 
 # define NONE			1
 # define IN			2

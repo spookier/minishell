@@ -6,11 +6,34 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:51:02 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/23 02:26:41 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 21:52:09 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+void	revert_cmd(char **split_each_cmd)//header
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (split_each_cmd[++i])
+	{
+		j = -1;
+		while (split_each_cmd[i][++j])
+		{
+			if (split_each_cmd[i][j] == _PIPE)
+				split_each_cmd[i][j] = '|';
+			else if (split_each_cmd[i][j] == _IN)
+				split_each_cmd[i][j] = '<';
+			else if (split_each_cmd[i][j] == _OUT)
+				split_each_cmd[i][j] = '>';
+			else if (split_each_cmd[i][j] == _SPACE)
+				split_each_cmd[i][j] = ' ';
+		}
+	}
+}
 
 int	is_redir(char *str)
 {
@@ -95,6 +118,7 @@ t_data	**fill_cmd_struct(t_data **cmd, char *each_cmd, int cmd_i)
 	int		option;
 
 	split_each_cmd = ft_split(each_cmd, ' ');
+	revert_cmd(split_each_cmd);
 	option = 0;
 	while (split_each_cmd[option])
 		option++;
