@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:28:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 15:49:48 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 22:27:23 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	exec_main(t_data **cmd, char ***env)
 	int	fd[2];
 	int	i;
 
+	signal(SIGQUIT, signal_handler);
 	check_heredoc(cmd);
 	alloc_pipe(cmd, &_pipe);
 	i = -1;

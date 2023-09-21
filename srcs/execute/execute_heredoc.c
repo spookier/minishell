@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:42:19 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/18 04:46:24 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/21 23:56:46 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	write_heredoc(int fd_heredoc, char *delim)
 
 	while (1)
 	{
+		signal(SIGQUIT, SIG_IGN);
 		line = readline("> ");
 		if (!line)
 		{
