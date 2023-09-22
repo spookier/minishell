@@ -80,7 +80,7 @@ int	minishell_main(t_data **cmd, char **env)
 		cmd = ft_calloc(sizeof(t_data *), 2);
 		if (!cmd)
 			return (printf("%sError: malloc error%s\n", RED, BLACK), 1);
-		rdline = readline("\x1b[36mminishell$\x1b[0m ");
+		rdline = readline("\001\x1b[36m\002minishell$\001\x1b[0m\002 ");
 		if (!rdline)
 		{
 			printf("exit\n");
