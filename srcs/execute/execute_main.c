@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:28:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/22 01:53:29 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/23 02:10:29 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ void	wait_pid(t_data **cmd)
 	}
 }
 
-void	norminette_exec_main(t_data **cmd, int (*_pipe)[2])
+void	run_command(t_data *cmd, char ***env, int *fd)
 {
-	close_pipe(cmd, &_pipe);
-	free((*_pipe));
+	set_fd_stdio(fd);
+	if (redir_set_fd(cmd))
+		execute_cmd(cmd, env);
+	close_fd_stdio(fd);
 }
 
 void	exec_main(t_data **cmd, char ***env)
@@ -80,7 +82,8 @@ void	exec_main(t_data **cmd, char ***env)
 	int	i;
 
 	signal(SIGQUIT, signal_handler);
-	check_heredoc(cmd);
+	if (check_heredoc(cmd))
+		return ;
 	alloc_pipe(cmd, &_pipe);
 	i = -1;
 	while (cmd[++i])
@@ -92,12 +95,10 @@ void	exec_main(t_data **cmd, char ***env)
 		if (cmd[i]->pid == CHILD || cmd[i]->pid == PARENTS)
 		{
 			set_fd_close_pipe(cmd, &_pipe, i);
-			set_fd_stdio(fd);
-			if (redir_set_fd(cmd[i]))
-				execute_cmd(cmd[i], env);
-			close_fd_stdio(fd);
+			run_command(cmd[i], env, fd);
 		}
 	}
-	norminette_exec_main(cmd, _pipe);
+	close_pipe(cmd, &_pipe);
+	free((*_pipe));
 	wait_pid(cmd);
 }
