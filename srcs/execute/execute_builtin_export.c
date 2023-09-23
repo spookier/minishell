@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:15 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/23 05:58:24 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 01:42:43 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,16 @@ void	run_export_no_option(char **env)
 void	run_export(char ***env, char *key_value)
 {
 	char	*key;
+	int		pos;
 	int		i;
 
-	key = ft_substr(key_value, 0, find_c_pos(key_value, '=', 0));
+	key_value = ft_strdup(key_value);
+	if (!key_value)
+		return ;
+	pos = find_c_pos(key_value, '=', 0);
+	if (pos == -1)
+		return ;
+	key = ft_substr(key_value, 0, pos);
 	i = -1;
 	while ((*env)[++i])
 	{
@@ -99,7 +106,7 @@ void	builtin_export(t_data *cmd, char ***env)
 				break ;
 			}
 			if (find_c_pos(cmd->option[i], '=', 0) != -1)
-				run_export(env, ft_strdup(cmd->option[i]));
+				run_export(env, cmd->option[i]);
 			i++;
 		}
 	}

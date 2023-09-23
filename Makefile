@@ -16,7 +16,7 @@ YELLOW		:= $(shell tput -Txterm setaf 3)
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3#-fsanitize=address
 RM = rm -f
 
 LIBFT_DIR = ./libft
