@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/23 04:50:54 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 00:25:06 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ extern int	g_exit_code;
 
 /* 🐥 main 🐥 */
 /* main.c */
-char		**alloc_env(char **env);
+int			alloc_env(char ***env);
 void		signal_handler(int signo);
 void		signal_detect(void);
-int			minishell_main(t_data **cmd, char **env);
+int			minishell_main(t_data **cmd, char ***env);
 int			main(int argc, char **argv, char **env);
 
 /* 🐥 parse 🐥 */

@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:11 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/23 05:56:34 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 01:32:12 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,15 @@ char	*get_env_value(char **env, char *key)
 
 void	add_element_to_env(char ***env, char *element_to_add)
 {
-	char	**new_env;
 	int		i;
 
 	i = 0;
 	while ((*env)[i])
 		i++;
-	new_env = (char **)ft_calloc(sizeof(char *), i + 2);
-	i = -1;
-	while ((*env)[++i])
-		new_env[i] = ft_strdup((*env)[i]);
-	new_env[i] = element_to_add;
-	free_2d_arr(*env);
-	*env = new_env;
+	*env = ft_realloc(*env, sizeof(char *) * (i + 1), sizeof(char *) * (i + 2));
+	(*env)[i] = element_to_add;
 }
+
 
 void	update_pwd_oldpwd(char ***env, char *absolute_path)
 {
@@ -58,16 +53,20 @@ void	update_pwd_oldpwd(char ***env, char *absolute_path)
 	int		i;
 
 	pwd = ft_strjoin("PWD=", absolute_path);
+	if (!pwd)
+		return ;
 	oldpwd = NULL;
-	*env = remove_element_from_env(*env, "OLDPWD");
 	i = -1;
 	while ((*env)[++i])
 	{
 		if (!ft_strncmp((*env)[i], "PWD", 3) && (*env)[i][3] == '=')
 		{
-			oldpwd = ft_strjoin("OLD", (*env)[i]);
-			free((*env)[i]);
-			(*env)[i] = oldpwd;
+			if (!ft_strncmp((*env)[i], "OLDPWD", 6) && (*env)[i][6] == '=')
+			{
+				oldpwd = ft_strjoin("OLD", (*env)[i]);
+				free((*env)[i]);
+				(*env)[i] = oldpwd;
+			}
 		}
 	}
 	add_element_to_env(env, pwd);
@@ -90,7 +89,8 @@ void	run_cd(t_data *cmd, char ***env, char *option)
 	else
 	{
 		getcwd(absolute_path, sizeof(absolute_path));
-		update_pwd_oldpwd(env, absolute_path);
+		if (absolute_path[0] != '\0')
+			update_pwd_oldpwd(env, absolute_path);
 	}
 }
 
