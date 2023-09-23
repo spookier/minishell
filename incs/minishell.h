@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/23 02:10:57 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/23 04:50:54 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ void		builtin_unset(t_data *cmd, char **env);
 /* execute_builtin_export.c */
 void		run_export_no_option(char **env);
 void		run_export(char ***env, char *key_value);
+int			check_identifier(char *str);
 void		builtin_export(t_data *cmd, char ***env);
 
 /* execute_builtin_cd.c */

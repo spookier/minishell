@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:15 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/22 01:04:46 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/23 05:58:24 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,34 @@ void	run_export(char ***env, char *key_value)
 	add_element_to_env(env, key_value);
 }
 
+int	check_identifier(char *str)
+{
+	int	i;
+
+	i = -1;
+	if (find_c_pos(str, '=', 0) == -1)
+	{
+		while (str[++i])
+		{
+			if (!(('a' <= str[i] && str[i] <= 'z')
+					|| ('A' <= str[i] && str[i] <= 'Z')
+					|| str[i] == '_'))
+				return (0);
+		}
+	}
+	else
+	{
+		while (str[++i] == '=')
+		{
+			if (!(('a' <= str[i] && str[i] <= 'z')
+					|| ('A' <= str[i] && str[i] <= 'Z')
+					|| str[i] == '_'))
+				return (0);
+		}
+	}
+	return (1);
+}
+
 void	builtin_export(t_data *cmd, char ***env)
 {
 	int	i;
@@ -64,6 +92,12 @@ void	builtin_export(t_data *cmd, char ***env)
 		i = 0;
 		while (cmd->option[i])
 		{
+			if (!check_identifier(cmd->option[i]))
+			{
+				stderr_msg("minishell: export: not a valid identifier\n");
+				cmd->exit = 1;
+				break ;
+			}
 			if (find_c_pos(cmd->option[i], '=', 0) != -1)
 				run_export(env, ft_strdup(cmd->option[i]));
 			i++;
