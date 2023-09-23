@@ -6,18 +6,30 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:42:19 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 23:56:46 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/23 02:05:13 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	write_heredoc(int fd_heredoc, char *delim)
+void	signal_handler_heredoc(int signo)
+{
+	if (signo == SIGINT)
+	{
+		ioctl(STDIN, TIOCSTI, "\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		g_exit_code = 130;
+	}
+}
+
+void	write_heredoc(int fd_heredoc, char *delim, int *flag)
 {
 	char	*line;
 
-	while (1)
+	while (!(*flag))
 	{
+		signal(SIGINT, signal_handler_heredoc);
 		signal(SIGQUIT, SIG_IGN);
 		line = readline("> ");
 		if (!line)
@@ -26,26 +38,29 @@ void	write_heredoc(int fd_heredoc, char *delim)
 			stderr_msg("here-document delimited by end-of-file\n");
 			break ;
 		}
-		if (ft_strncmp(line, delim, ft_strlen(delim)) == 0
+		if (g_exit_code == 130)
+			(*flag)++;
+		if (!ft_strncmp(line, delim, ft_strlen(delim))
 			&& ft_strlen(line) == ft_strlen(delim))
-		{
-			free(line);
 			break ;
-		}
 		write(fd_heredoc, line, ft_strlen(line));
 		write(fd_heredoc, "\n", 1);
 		free(line);
 	}
+	if (line && !(*flag))
+		free(line);
 	close(fd_heredoc);
 }
 
-void	check_heredoc(t_data **cmd)
+int	check_heredoc(t_data **cmd)
 {
 	int		i;
 	int		fd_heredoc;
 	char	*file_name;
+	int		flag;
 
 	i = 0;
+	flag = 0;
 	while (cmd[i])
 	{
 		if (cmd[i]->redir->redir_flag == HEREDOC)
@@ -53,10 +68,13 @@ void	check_heredoc(t_data **cmd)
 			file_name = ft_strdup("/tmp/.heredoc_");
 			file_name = append_num_to_alloced_str(file_name, i);
 			fd_heredoc = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0664);
-			write_heredoc(fd_heredoc, cmd[i]->redir->file_name);
+			write_heredoc(fd_heredoc, cmd[i]->redir->file_name, &flag);
 			free(cmd[i]->redir->file_name);
 			cmd[i]->redir->file_name = file_name;
 		}
 		i++;
 	}
+	if (flag)
+		return (1);
+	return (0);
 }

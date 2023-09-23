@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/22 01:54:09 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/23 02:10:57 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@
 # include <fcntl.h>
 # include <sys/errno.h>
 # include <limits.h>
+# include <sys/ioctl.h>
+# include <asm/ioctl.h>
 # include "../libft/incs/libft.h"
 # include "../libft/incs/ft_printf.h"
 
@@ -75,6 +77,7 @@ typedef struct s_data
 	int			pid;
 }	t_data;
 
+/* global variable */
 extern int	g_exit_code;
 
 /* 🐥 main 🐥 */
@@ -151,12 +154,13 @@ void		free_cmd(t_data **cmd);
 /* execute_main.c */
 void		execute_cmd(t_data *cmd, char ***env);
 void		wait_pid(t_data **cmd);
-void		norminette_exec_main(t_data **cmd, int (*_pipe)[2]);
+void		run_command(t_data *cmd, char ***env, int *fd);
 void		exec_main(t_data **cmd, char ***env);
 
 /* execute_heredoc.c */
-void		write_heredoc(int fd_heredoc, char *delim);
-void		check_heredoc(t_data **cmd);
+void		signal_handler_heredoc(int signo);
+void		write_heredoc(int fd_heredoc, char *delim, int *flag);
+int			check_heredoc(t_data **cmd);
 
 /* execute_pipe_fd.c */
 void		alloc_pipe(t_data **cmd, int (**_pipe)[2]);
