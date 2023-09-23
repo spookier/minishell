@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 04:02:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/20 16:32:32 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/23 05:59:34 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,28 +45,22 @@ char	*change_key_to_value(char *line,
 char	*env_check_value(char **env, char *line, int *start, int end)
 {
 	char	*key_value[2];
-	char	*temp;
-	int		pos;
 	int		i;
 
-	while (line[end - 1] == '"' || line[end - 1] == '\'')
-		end--;
-	key_value[KEY] = ft_substr(line, *start, end - *start);
+	key_value[KEY] = ft_substr(line, *start, end - *start + 1);
 	key_value[VALUE] = NULL;
 	i = -1;
 	while (env[++i])
 	{
-		pos = find_c_pos(env[i], '=', 0);
-		temp = ft_substr(env[i], 0, pos);
-		if (!ft_strncmp(temp, key_value[KEY], ft_strlen(temp))
-			&& ft_strlen(temp) == ft_strlen(key_value[KEY]))
-			key_value[VALUE]
-				= ft_substr(env[i], pos + 1, ft_strlen(env[i]) - (pos + 1));
-		free(temp);
+		if (!ft_strncmp(env[i], key_value[KEY], ft_strlen(key_value[KEY]))
+			&& env[i][ft_strlen(key_value[KEY])] == '=')
+		{
+			key_value[VALUE] = ft_strdup(env[i]);
+			key_value[VALUE] = remove_str_from_line(key_value[VALUE],
+					0, ft_strlen(key_value[KEY]) + 1);
+		}
 	}
-	if (!key_value[VALUE] && key_value[KEY][0] == '?')
-		key_value[VALUE] = ft_itoa(g_exit_code);
-	else if (!key_value[VALUE])
+	if (!key_value[VALUE])
 		key_value[VALUE] = ft_strdup("");
 	return (change_key_to_value(line, key_value[KEY], start, key_value[VALUE]));
 }
@@ -76,9 +70,14 @@ char	*env_var_convert_line(char **env, char *line, int *i)
 	int	pos;
 
 	remove_str_from_line(line, *i, ft_strlen("$"));
-	pos = find_c_pos(line, ' ', *i);
-	if (pos == -1)
-		pos = ft_strlen(line);
+	if (line[*i] == '?')
+		return (change_key_to_value(line,
+				ft_strdup("?"), i, ft_itoa(g_exit_code)));
+	pos = *i + 1;
+	while ((line[pos] != '"' && line[pos] != '\''
+			&& line[pos] != ' ' && line[pos] != '\0'))
+		pos++;
+	pos--;
 	return (env_check_value(env, line, i, pos));
 }
 
