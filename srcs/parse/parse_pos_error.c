@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 19:23:23 by yhwang            #+#    #+#             */
-/*   Updated: 2023/08/23 01:27:31 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 05:36:05 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,13 @@ void	pos_err_msg(int flag)
 
 int	check_pos_err(char *line, int *flag, int i)
 {
-	while (line[i] != END)
+	while (line[i] != END || line[i] != '\0')
 	{
 		if (line[i] == PIPE || line[i] == IN || line[i] == OUT)
 		{
 			*flag = line[i];
-			i++;
+			if (line[i + 1] == END || line[i + 1] == '\0')
+				return (pos_err_msg(*flag), 1);
 			if (line[i] == IN || line[i] == OUT)
 			{
 				if (line[i] == IN)
