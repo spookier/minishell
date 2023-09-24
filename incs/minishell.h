@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 05:59:09 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 06:18:00 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char		*redir_put_space(char *line);
 char		*make_new_line(char **env, char *rdline);
 
 /* parse_handle_env_variable.c */
-char		*change_key_to_value(char *line,
+char		*change_key_to_value(char **line,
 				char *key, int *pos_key_start, char *value);
 char		*env_check_value(char **env, char *line, int *start, int end);
 char		*env_var_convert_line(char **env, char *line, int *i);
