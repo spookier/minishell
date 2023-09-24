@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 00:58:08 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 04:52:23 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 06:02:52 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	fill_redir(t_data **cmd, char **split_cmd, int cmd_i)
 	int	flag;
 
 	if (cmd[cmd_i]->redir[0]->redir_flag == NONE)
-	{
-		// cmd[cmd_i]->redir[0]->file_name = ft_strdup("");
 		return ;
-	}
 	i = -1;
 	flag = 0;
 	while (split_cmd[++i])
@@ -42,8 +39,6 @@ void	fill_redir(t_data **cmd, char **split_cmd, int cmd_i)
 		j = 0;
 		while (j < flag)
 		{
-			printf("redir: %s\n", split_cmd[(j + 1) * 2 - 1]);
-			printf("filename: %s\n", split_cmd[(j + 1) * 2]);
 			if (j > 0)
 				cmd[cmd_i]->redir[j] = ft_calloc(sizeof(t_redir *), 2);
 			printf("flag: %d\n", cmd[cmd_i]->redir[j]->redir_flag);
