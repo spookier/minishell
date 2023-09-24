@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:28:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 05:08:44 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 06:57:53 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	execute_cmd(t_data **cmd_struct, t_data *cmd, char ***env)
 		free_2d_arr(*env);
 		exit(exit_code);
 	}
-	if ((!ft_strncmp(cmd->command, "exit", 4)
+	if (cmd->pid == PARENTS && (!ft_strncmp(cmd->command, "exit", 4)
 			&& ft_strlen(cmd->command) == 4))
 	{
 		exit_code = cmd->exit;

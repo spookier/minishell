@@ -6,31 +6,36 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:51:02 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 04:46:32 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 15:11:37 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	revert_cmd(char **split_each_cmd)
+void	revert_cmd(t_data **cmd)
 {
 	int	i;
 	int	j;
+	int	k;
 
 	i = -1;
-	while (split_each_cmd[++i])
+	while (cmd[++i])
 	{
 		j = -1;
-		while (split_each_cmd[i][++j])
+		while (cmd[i]->option[++j])
 		{
-			if (split_each_cmd[i][j] == _PIPE)
-				split_each_cmd[i][j] = '|';
-			else if (split_each_cmd[i][j] == _IN)
-				split_each_cmd[i][j] = '<';
-			else if (split_each_cmd[i][j] == _OUT)
-				split_each_cmd[i][j] = '>';
-			else if (split_each_cmd[i][j] == _SPACE)
-				split_each_cmd[i][j] = ' ';
+			k = -1;
+			while (cmd[i]->option[j][++k])
+			{
+				if (cmd[i]->option[j][k] == _PIPE)
+					cmd[i]->option[j][k] = '|';
+				else if (cmd[i]->option[j][k] == _IN)
+					cmd[i]->option[j][k] = '<';
+				else if (cmd[i]->option[j][k] == _OUT)
+					cmd[i]->option[j][k] = '>';
+				else if (cmd[i]->option[j][k] == _SPACE)
+					cmd[i]->option[j][k] = ' ';
+			}
 		}
 	}
 }
@@ -45,7 +50,7 @@ int	is_redir(char *str)
 	return (0);
 }
 
-void	fill_option(t_data **cmd, char **split_cmd, int cmd_i)
+void	fill_option(t_data **cmd, char *each_cmd, char **split_cmd, int cmd_i)
 {
 	int	i;
 	int	j;
@@ -62,6 +67,7 @@ void	fill_option(t_data **cmd, char **split_cmd, int cmd_i)
 		}
 		cmd[cmd_i]->option[j++] = ft_strdup(split_cmd[i]);
 	}
+	check_redir(cmd, each_cmd, split_cmd, cmd_i);
 }
 
 t_data	**fill_cmd_struct(t_data **cmd, char *each_cmd, int cmd_i)
@@ -70,7 +76,6 @@ t_data	**fill_cmd_struct(t_data **cmd, char *each_cmd, int cmd_i)
 	int		option;
 
 	split_each_cmd = ft_split(each_cmd, ' ');
-	revert_cmd(split_each_cmd);
 	option = 0;
 	while (split_each_cmd[option])
 		option++;
@@ -89,7 +94,7 @@ t_data	**fill_cmd_struct(t_data **cmd, char *each_cmd, int cmd_i)
 		free_2d_arr(split_each_cmd);
 		return (free_cmd(cmd), NULL);
 	}
-	fill_option(cmd, split_each_cmd, cmd_i);
-	check_redir(cmd, each_cmd, split_each_cmd, cmd_i);
+	fill_option(cmd, each_cmd, split_each_cmd, cmd_i);
+	revert_cmd(cmd);
 	return (free_2d_arr(split_each_cmd), cmd);
 }
