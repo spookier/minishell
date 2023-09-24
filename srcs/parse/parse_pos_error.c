@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 19:23:23 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 05:36:05 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 05:57:27 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,20 @@ void	pos_err_msg(int flag)
 		token_err_msg(">");
 	else if (flag == HEREDOC)
 		token_err_msg("<<");
-	else
+	else if (flag == APPEND)
 		token_err_msg(">>");
 }
 
 int	check_pos_err(char *line, int *flag, int i)
 {
-	while (line[i] != END || line[i] != '\0')
+	while (line[i] != END)
 	{
 		if (line[i] == PIPE || line[i] == IN || line[i] == OUT)
 		{
 			*flag = line[i];
 			if (line[i + 1] == END || line[i + 1] == '\0')
 				return (pos_err_msg(*flag), 1);
+			i++;
 			if (line[i] == IN || line[i] == OUT)
 			{
 				if (line[i] == IN)

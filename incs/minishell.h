@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 05:00:41 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 05:59:09 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@
 # define PIPE			2
 # define END			3
 
+# define NONE			4
+# define IN			5
+# define OUT			6
+# define HEREDOC		7
+# define APPEND			8
+
 # define _PIPE			10
 # define _IN			11
 # define _OUT			12
 # define _SPACE			13
-
-# define NONE			1
-# define IN			2
-# define OUT			3
-# define HEREDOC		4
-# define APPEND			5
 
 # define KEY			0
 # define VALUE			1
