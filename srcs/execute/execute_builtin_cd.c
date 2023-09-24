@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:11 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 02:22:24 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 06:48:25 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,14 @@ void	update_pwd_oldpwd(char ***env, char *absolute_path)
 		return ;
 	oldpwd = NULL;
 	i = -1;
+	*env = remove_element_from_env(*env, "OLDPWD");
 	while ((*env)[++i])
 	{
 		if (!ft_strncmp((*env)[i], "PWD", 3) && (*env)[i][3] == '=')
 		{
-			if (!(!ft_strncmp((*env)[i], "OLDPWD", 6) && (*env)[i][6] == '='))
-			{
-				oldpwd = ft_strjoin("OLD", (*env)[i]);
-				free((*env)[i]);
-				(*env)[i] = oldpwd;
-			}
+			oldpwd = ft_strjoin("OLD", (*env)[i]);
+			free((*env)[i]);
+			(*env)[i] = oldpwd;
 		}
 	}
 	add_element_to_env(env, pwd);
