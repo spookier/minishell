@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 04:57:11 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 06:48:25 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 16:29:55 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	add_element_to_env(char ***env, char *element_to_add)
 	*env = ft_realloc(*env, sizeof(char *) * (i + 1), sizeof(char *) * (i + 2));
 	(*env)[i] = element_to_add;
 }
-
 
 void	update_pwd_oldpwd(char ***env, char *absolute_path)
 {

@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 01:17:25 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 15:26:38 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	alloc_env(char ***env)
 
 	arr_env = (char **)ft_calloc(sizeof(char *), 2);
 	if (!arr_env)
-		return (printf("%sError: malloc error%s\n", RED, BLACK), 1);
+		return (stderr_msg("Error: malloc error\n"), 1);
 	i = -1;
 	while ((*env)[++i] && find_c_pos((*env)[i], '=', 0) != -1)
 	{
@@ -31,7 +31,7 @@ int	alloc_env(char ***env)
 		arr_env[i] = ft_strdup((*env)[i]);
 		if (!arr_env[i])
 		{
-			printf("%sError: malloc error%s\n", RED, BLACK);
+			stderr_msg("Error: malloc error\n");
 			return (free_2d_arr(arr_env), 1);
 		}
 	}
@@ -81,16 +81,12 @@ int	minishell_main(t_data **cmd, char ***env)
 		signal_detect();
 		cmd = ft_calloc(sizeof(t_data *), 2);
 		if (!cmd)
-		{
-			return (printf("%sError: malloc error%s\n", RED, BLACK), 1);
-			free_2d_arr(*env);
-		}
+			return (minishell_exit(NULL, *env, "Error: malloc error\n"), 1);
 		rdline = readline("\001\x1b[36m\002minishell$\001\x1b[0m\002 ");
 		if (!rdline)
 		{
 			printf("exit\n");
-			free_2d_arr(*env);
-			return (free_cmd(cmd), 2);
+			return (minishell_exit(cmd, *env, NULL), 1);
 		}
 		add_history(rdline);
 		cmd = parse(cmd, *env, rdline);
@@ -111,8 +107,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argv;
 	if (argc != 1)
-		return (printf("%sArgument error\nUseage: ./minishell%s\n",
-				RED, BLACK), 1);
+		return (stderr_msg("Argument error\nUseage: ./minishell\n"), 1);
 	if (alloc_env(&env))
 		return (1);
 	if (!env)

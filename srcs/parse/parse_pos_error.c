@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 19:23:23 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 05:57:27 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 15:33:33 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*copy_line(char *line)
 	len = ft_strlen(line);
 	res = (char *)ft_calloc(sizeof(char), len + 2);
 	if (!res)
-		return (printf("%sError: malloc error%s\n", RED, BLACK), NULL);
+		return (stderr_msg("Error: malloc error\n"), NULL);
 	while (line[++i])
 		res[i] = line[i];
 	return (res);

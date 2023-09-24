@@ -6,7 +6,7 @@
 #    By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:50:04 by yhwang            #+#    #+#              #
-#    Updated: 2023/09/24 06:54:44 by yhwang           ###   ########.fr        #
+#    Updated: 2023/09/24 16:06:06 by yhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ FILES =	main \
 		$(PARSE)parse_pos_error \
 		$(PARSE)parse_make_new_line \
 		$(PARSE)parse_handle_env_variable \
+		$(PARSE)parse_convert_env_variable \
 		$(PARSE)parse_fill_cmd_struct \
 		$(PARSE)parse_fill_cmd_check_redir \
 		$(PARSE)parse_utils \

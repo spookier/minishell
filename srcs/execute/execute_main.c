@@ -6,16 +6,35 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:28:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 06:57:53 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 16:29:32 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	execute_cmd(t_data **cmd_struct, t_data *cmd, char ***env)
+void	check_pid(t_data **cmd_struct, t_data *cmd, char ***env)
 {
 	int	exit_code;
 
+	if (cmd->pid == CHILD)
+	{
+		exit_code = cmd->exit;
+		free_cmd(cmd_struct);
+		free_2d_arr(*env);
+		exit(exit_code);
+	}
+	if (cmd->pid == PARENTS && (!ft_strncmp(cmd->command, "exit", 4)
+			&& ft_strlen(cmd->command) == 4))
+	{
+		exit_code = cmd->exit;
+		free_cmd(cmd_struct);
+		free_2d_arr(*env);
+		exit(exit_code);
+	}
+}
+
+void	execute_cmd(t_data **cmd_struct, t_data *cmd, char ***env)
+{
 	if ((!ft_strncmp(cmd->command, "echo", 4)
 			&& ft_strlen(cmd->command) == 4))
 		builtin_echo(cmd);
@@ -39,21 +58,7 @@ void	execute_cmd(t_data **cmd_struct, t_data *cmd, char ***env)
 		builtin_exit(cmd);
 	else
 		non_builtin(cmd, *env);
-	if (cmd->pid == CHILD)
-	{
-		exit_code = cmd->exit;
-		free_cmd(cmd_struct);
-		free_2d_arr(*env);
-		exit(exit_code);
-	}
-	if (cmd->pid == PARENTS && (!ft_strncmp(cmd->command, "exit", 4)
-			&& ft_strlen(cmd->command) == 4))
-	{
-		exit_code = cmd->exit;
-		free_cmd(cmd_struct);
-		free_2d_arr(*env);
-		exit(exit_code);
-	}
+	check_pid(cmd_struct, cmd, env);
 }
 
 void	wait_pid(t_data **cmd)

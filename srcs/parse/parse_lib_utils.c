@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 20:50:20 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 04:28:21 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 16:07:40 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,14 @@ void	free_cmd(t_data **cmd)
 	}
 	if (cmd)
 		free(cmd);
+}
+
+void	minishell_exit(t_data **cmd, char **env, char *err_msg)
+{
+	if (cmd)
+		free_cmd(cmd);
+	if (env)
+		free_2d_arr(env);
+	if (err_msg)
+		stderr_msg(err_msg);
 }

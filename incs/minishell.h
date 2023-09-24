@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 15:11:14 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 16:41:18 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,26 +121,35 @@ char		*redir_put_space(char *line);
 char		*make_new_line(char **env, char *rdline);
 
 /* parse_handle_env_variable.c */
+void		handle_env_var_norminette(int *quote);
+char		*handle_env_var(char **env, char *line);
+
+/* parse_convert_env_variable.c */
+void		fill_new_line(char *new_line, char *value,
+				char *line_before_env, char *line_after_env);
 char		*change_key_to_value(char **line,
 				char *key, int *pos_key_start, char *value);
 char		*env_check_value(char **env, char *line, int *start, int end);
 char		*env_var_convert_line(char **env, char *line, int *i);
-void		handle_env_var_norminette(int *quote);
-char		*handle_env_var(char **env, char *line);
 
 /* parse_fill_cmd_struct.c */
 void		revert_cmd(t_data **cmd);
 int			is_redir(char *str);
-void		fill_option(t_data **cmd, char *each_cmd, char **split_cmd, int cmd_i);
+void		fill_option(t_data **cmd,
+				char *each_cmd, char **split_cmd, int cmd_i);
 t_data		**fill_cmd_struct(t_data **cmd, char *each_cmd, int cmd_i);
 
 /* parse_fill_cmd_check_redir.c */
+void		fill_realloc_redir(t_data **cmd,
+				char **split_cmd, int cmd_i, int i);
+void		realloc_redir(t_data **cmd, char **split_cmd, int cmd_i, int flag);
 void		fill_redir(t_data **cmd, char **split_cmd, int cmd_i);
 void		check_redir(t_data **cmd,
 				char *each_cmd, char **split_cmd, int cmd_i);
 
 /* parse_utils.c */
 void		minishell_header(void);
+void		stderr_msg(char *str);
 void		token_err_msg(char *s);
 int			find_c_pos(char *str, char c, int start);
 char		*remove_str_from_line(char *line, int str_start_pos, int str_len);
@@ -149,9 +158,11 @@ char		*remove_str_from_line(char *line, int str_start_pos, int str_len);
 void		*ft_realloc(void *old_ptr, size_t old_len, size_t new_len);
 void		free_2d_arr(char **arr);
 void		free_cmd(t_data **cmd);
+void		minishell_exit(t_data **cmd, char **env, char *err_msg);
 
 /* 🐥 execute 🐥 */
 /* execute_main.c */
+void		check_pid(t_data **cmd_struct, t_data *cmd, char ***env);
 void		execute_cmd(t_data **cmd_struct, t_data *cmd, char ***env);
 void		wait_pid(t_data **cmd);
 void		run_command(t_data **cmd_struct, t_data *cmd, char ***env, int *fd);
@@ -160,6 +171,7 @@ void		exec_main(t_data **cmd, char ***env);
 /* execute_heredoc.c */
 void		signal_handler_heredoc(int signo);
 void		write_heredoc(int fd_heredoc, char *delim, int *flag);
+void		run_heredoc(t_data **cmd, int i, int j, int *flag);
 int			check_heredoc(t_data **cmd);
 
 /* execute_pipe_fd.c */
@@ -170,7 +182,8 @@ void		set_fd_stdio(int *fd);
 void		close_fd_stdio(int *fd);
 
 /* execute_redir.c */
-int			redir_open_file(int *in_fd, int *out_fd, t_data *cmd, int i);
+int			redir_open_file(t_data *cmd, int *in_fd, int *out_fd, int i);
+void		set_fd(t_data *cmd, int *in_fd, int *out_fd, int i);
 int			redir_set_fd(t_data *cmd);
 
 /* execute_builtin_echo.c */
@@ -215,6 +228,5 @@ char		**remove_element_from_env(char **env, char *to_remove);
 int			is_builtin_cmd(char *command);
 char		*append_str_to_alloced_str(char *str1, char *str2);
 char		*append_num_to_alloced_str(char *str1, int i);
-void		stderr_msg(char *str);
 
 #endif

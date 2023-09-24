@@ -6,13 +6,13 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:43:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 03:32:02 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 16:39:32 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int	redir_open_file(int *in_fd, int *out_fd, t_data *cmd, int i)
+int	redir_open_file(t_data *cmd, int *in_fd, int *out_fd, int i)
 {
 	if (cmd->redir[i]->redir_flag == IN || cmd->redir[i]->redir_flag == HEREDOC)
 	{
@@ -35,6 +35,22 @@ int	redir_open_file(int *in_fd, int *out_fd, t_data *cmd, int i)
 	return (1);
 }
 
+void	set_fd(t_data *cmd, int *in_fd, int *out_fd, int i)
+{
+	if (cmd->redir[i]->redir_flag == IN || cmd->redir[i]->redir_flag == HEREDOC)
+	{
+		dup2(*in_fd, STDIN);
+		close(*in_fd);
+		if (cmd->redir[i]->redir_flag == HEREDOC)
+			unlink(cmd->redir[i]->file_name);
+	}
+	if (cmd->redir[i]->redir_flag == OUT || cmd->redir[i]->redir_flag == APPEND)
+	{
+		dup2(*out_fd, STDOUT);
+		close(*out_fd);
+	}
+}
+
 int	redir_set_fd(t_data *cmd)
 {
 	int	in_fd;
@@ -46,20 +62,9 @@ int	redir_set_fd(t_data *cmd)
 	{
 		if ((cmd->redir[i]->redir_flag != NONE))
 		{
-			if (!redir_open_file(&in_fd, &out_fd, cmd, i))
-			return (0);
-			if (cmd->redir[i]->redir_flag == IN || cmd->redir[i]->redir_flag == HEREDOC)
-			{
-				dup2(in_fd, STDIN);
-				close(in_fd);
-				if (cmd->redir[i]->redir_flag == HEREDOC)
-					unlink(cmd->redir[i]->file_name);
-			}
-			if (cmd->redir[i]->redir_flag == OUT || cmd->redir[i]->redir_flag == APPEND)
-			{
-				dup2(out_fd, STDOUT);
-				close(out_fd);
-			}
+			if (!redir_open_file(cmd, &in_fd, &out_fd, i))
+				return (0);
+			set_fd(cmd, &in_fd, &out_fd, i);
 		}
 	}
 	return (1);
