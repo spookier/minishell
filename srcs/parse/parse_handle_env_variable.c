@@ -6,13 +6,13 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 04:02:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 05:21:52 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 06:21:12 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-char	*change_key_to_value(char *line,
+char	*change_key_to_value(char **line,
 			char *key, int *pos_key_start, char *value)
 {
 	char	*new_line;
@@ -21,32 +21,32 @@ char	*change_key_to_value(char *line,
 	int		i;
 	int		j;
 
-	line_before_env = ft_substr(line, 0, *pos_key_start);
-	line_after_env = ft_substr(line, *pos_key_start + ft_strlen(key),
-			ft_strlen(line) - ft_strlen(line_before_env));
+	line_before_env = ft_substr((*line), 0, *pos_key_start);
+	line_after_env = ft_substr((*line), *pos_key_start + ft_strlen(key),
+			ft_strlen((*line)) - ft_strlen(line_before_env));
 	new_line = ft_calloc(sizeof(char), (ft_strlen(line_before_env)
 			+ ft_strlen(value) + ft_strlen(line_after_env) + 1));
 	i = -1;
 	while (line_before_env[++i])
-		line[i] = line_before_env[i];
+		new_line[i] = line_before_env[i];
 	j = -1;
 	if (value)
 	{
 		while (value[++j])
-		line[i++] = value[j];
+		new_line[i++] = value[j];
 	}
 	j = -1;
 	while (line_after_env[++j])
-		line[i++] = line_after_env[j];
-	line[i] = '\0';
+		new_line[i++] = line_after_env[j];
+	new_line[i] = '\0';
 	*pos_key_start = *pos_key_start + ft_strlen(value) - 1;
 	free(key);
 	if (value)
 		free(value);
 	free(line_before_env);
-	free(line);
-	line = new_line;
-	return (free(line_after_env), line);
+	free(*line);
+	*line = new_line;
+	return (free(line_after_env), *line);
 }
 
 char	*env_check_value(char **env, char *line, int *start, int end)
@@ -67,9 +67,7 @@ char	*env_check_value(char **env, char *line, int *start, int end)
 					0, ft_strlen(key_value[KEY]) + 1);
 		}
 	}
-	// if (!key_value[VALUE])
-	// 	key_value[VALUE] = ft_strdup("");
-	return (change_key_to_value(line, key_value[KEY], start, key_value[VALUE]));
+	return (change_key_to_value(&line, key_value[KEY], start, key_value[VALUE]));
 }
 
 char	*env_var_convert_line(char **env, char *line, int *i)
@@ -78,7 +76,7 @@ char	*env_var_convert_line(char **env, char *line, int *i)
 
 	remove_str_from_line(line, *i, ft_strlen("$"));
 	if (line[*i] == '?')
-		return (change_key_to_value(line,
+		return (change_key_to_value(&line,
 				ft_strdup("?"), i, ft_itoa(g_exit_code)));
 	pos = *i + 1;
 	while ((line[pos] != '"' && line[pos] != '\''
