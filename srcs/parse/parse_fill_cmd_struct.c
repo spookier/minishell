@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:51:02 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 15:11:37 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 16:40:53 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	is_redir(char *str)
 	return (0);
 }
 
-void	fill_option(t_data **cmd, char *each_cmd, char **split_cmd, int cmd_i)
+void	fill_option(t_data **cmd,
+			char *each_cmd, char **split_cmd, int cmd_i)
 {
 	int	i;
 	int	j;

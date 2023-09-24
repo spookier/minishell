@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:42:19 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 04:15:09 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 16:33:13 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,32 +52,35 @@ void	write_heredoc(int fd_heredoc, char *delim, int *flag)
 	close(fd_heredoc);
 }
 
+void	run_heredoc(t_data **cmd, int i, int j, int *flag)
+{
+	int		fd_heredoc;
+	char	*file_name;
+
+	if (cmd[i]->redir[j]->redir_flag == HEREDOC)
+	{
+		file_name = ft_strdup("/tmp/.heredoc_");
+		file_name = append_num_to_alloced_str(file_name, (i * 10) + j);
+		fd_heredoc = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+		write_heredoc(fd_heredoc, cmd[i]->redir[j]->file_name, flag);
+		free(cmd[i]->redir[j]->file_name);
+		cmd[i]->redir[j]->file_name = file_name;
+	}
+}
+
 int	check_heredoc(t_data **cmd)
 {
 	int		i;
 	int		j;
-	int		fd_heredoc;
-	char	*file_name;
 	int		flag;
 
-	i = 0;
+	i = -1;
 	flag = 0;
-	while (cmd[i])
+	while (cmd[++i])
 	{
 		j = -1;
 		while (cmd[i]->redir[++j])
-		{
-			if (cmd[i]->redir[j]->redir_flag == HEREDOC)
-			{
-				file_name = ft_strdup("/tmp/.heredoc_");
-				file_name = append_num_to_alloced_str(file_name, (i * 10) + j);
-				fd_heredoc = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0664);
-				write_heredoc(fd_heredoc, cmd[i]->redir[j]->file_name, &flag);
-				free(cmd[i]->redir[j]->file_name);
-				cmd[i]->redir[j]->file_name = file_name;
-			}
-		}
-		i++;
+			run_heredoc(cmd, i, j, &flag);
 	}
 	if (flag)
 		return (1);

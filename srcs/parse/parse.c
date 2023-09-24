@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 02:35:34 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/21 21:51:33 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 15:28:29 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ t_data	**alloc_cmd(t_data **cmd, int i)
 	cmd = ft_realloc(cmd, sizeof(t_data *) * (i + 1),
 			sizeof(t_data *) * (i + 2));
 	if (!cmd)
-		return (printf("%sError: malloc error%s\n", RED, BLACK), NULL);
+		return (stderr_msg("Error: malloc error\n"), NULL);
 	cmd[i] = (t_data *)ft_calloc(sizeof(t_data), 2);
 	if (!cmd[i])
 	{
-		printf("%sError: malloc error%s\n", RED, BLACK);
+		stderr_msg("Error: malloc error\n");
 		return (free_cmd(cmd), NULL);
 	}
 	return (cmd);

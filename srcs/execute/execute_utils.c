@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:43:54 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 06:47:20 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 15:17:54 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,4 @@ char	*append_num_to_alloced_str(char *str1, int num)
 	free(str1);
 	free(tmp);
 	return (res);
-}
-
-void	stderr_msg(char *str)
-{
-	ft_putstr_fd(RED, STDERR);
-	ft_putstr_fd(str, STDERR);
-	ft_putstr_fd(BLACK, STDERR);
 }
