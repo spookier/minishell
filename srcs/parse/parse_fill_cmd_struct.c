@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 01:51:02 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/22 00:59:50 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 04:46:32 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ t_data	**fill_cmd_struct(t_data **cmd, char *each_cmd, int cmd_i)
 	}
 	cmd[cmd_i]->command = ft_strdup(split_each_cmd[0]);
 	cmd[cmd_i]->option = ft_calloc(sizeof(char *), option);
-	cmd[cmd_i]->redir = ft_calloc(sizeof(t_redir *), 2);
-	if (!cmd[cmd_i]->option || !cmd[cmd_i]->redir)
+	cmd[cmd_i]->redir = ft_calloc(sizeof(t_redir **), 2);
+	cmd[cmd_i]->redir[0] = ft_calloc(sizeof(t_redir *), 2);
+	if (!cmd[cmd_i]->option || !cmd[cmd_i]->redir[0])
 	{
 		printf("%sError: malloc error%s\n", RED, BLACK);
 		free_2d_arr(split_each_cmd);

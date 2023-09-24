@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:52:45 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/20 18:13:37 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 05:04:27 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ void	builtin_exit(t_data *cmd)
 		else
 			exit_status = (long)ft_atolonglong(cmd->option[0]);
 	}
-	exit(exit_status);
+	cmd->exit = exit_status;
 }

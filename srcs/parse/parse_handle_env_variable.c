@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 04:02:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/23 05:59:34 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 05:21:52 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*change_key_to_value(char *line,
 			char *key, int *pos_key_start, char *value)
 {
+	char	*new_line;
 	char	*line_before_env;
 	char	*line_after_env;
 	int		i;
@@ -23,22 +24,28 @@ char	*change_key_to_value(char *line,
 	line_before_env = ft_substr(line, 0, *pos_key_start);
 	line_after_env = ft_substr(line, *pos_key_start + ft_strlen(key),
 			ft_strlen(line) - ft_strlen(line_before_env));
-	line = ft_realloc(line, ft_strlen(line), ft_strlen(line_before_env)
-			+ ft_strlen(value) + ft_strlen(line_after_env) + 1);
+	new_line = ft_calloc(sizeof(char), (ft_strlen(line_before_env)
+			+ ft_strlen(value) + ft_strlen(line_after_env) + 1));
 	i = -1;
 	while (line_before_env[++i])
 		line[i] = line_before_env[i];
 	j = -1;
-	while (value[++j])
+	if (value)
+	{
+		while (value[++j])
 		line[i++] = value[j];
+	}
 	j = -1;
 	while (line_after_env[++j])
 		line[i++] = line_after_env[j];
 	line[i] = '\0';
 	*pos_key_start = *pos_key_start + ft_strlen(value) - 1;
 	free(key);
-	free(value);
+	if (value)
+		free(value);
 	free(line_before_env);
+	free(line);
+	line = new_line;
 	return (free(line_after_env), line);
 }
 
@@ -60,8 +67,8 @@ char	*env_check_value(char **env, char *line, int *start, int end)
 					0, ft_strlen(key_value[KEY]) + 1);
 		}
 	}
-	if (!key_value[VALUE])
-		key_value[VALUE] = ft_strdup("");
+	// if (!key_value[VALUE])
+	// 	key_value[VALUE] = ft_strdup("");
 	return (change_key_to_value(line, key_value[KEY], start, key_value[VALUE]));
 }
 

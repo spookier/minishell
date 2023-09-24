@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 00:25:06 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/24 05:00:41 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_data
 {
 	char		*command;
 	char		**option;
-	t_redir		*redir;
+	t_redir		**redir;
 	int			exit;
 	int			pid;
 }	t_data;
@@ -152,9 +152,9 @@ void		free_cmd(t_data **cmd);
 
 /* 🐥 execute 🐥 */
 /* execute_main.c */
-void		execute_cmd(t_data *cmd, char ***env);
+void		execute_cmd(t_data **cmd_struct, t_data *cmd, char ***env);
 void		wait_pid(t_data **cmd);
-void		run_command(t_data *cmd, char ***env, int *fd);
+void		run_command(t_data **cmd_struct, t_data *cmd, char ***env, int *fd);
 void		exec_main(t_data **cmd, char ***env);
 
 /* execute_heredoc.c */
@@ -170,7 +170,7 @@ void		set_fd_stdio(int *fd);
 void		close_fd_stdio(int *fd);
 
 /* execute_redir.c */
-int			redir_open_file(int *in_fd, int *out_fd, t_data *cmd);
+int			redir_open_file(int *in_fd, int *out_fd, t_data *cmd, int i);
 int			redir_set_fd(t_data *cmd);
 
 /* execute_builtin_echo.c */
