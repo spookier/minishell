@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 04:02:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 16:06:17 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/25 19:29:01 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*handle_env_var(char **env, char *line)
 		handle_env_var_norminette(&quote);
 		if (line[i] == '\'' && !quote)
 		{
-			i = find_c_pos(line, line[i], i + 1) + 1;
+			i = find_c_pos(line, line[i], i + 1);
 			continue ;
 		}
 		if (line[i] == '$' && (quote == 0 || quote == 1))
