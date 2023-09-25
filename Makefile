@@ -6,7 +6,7 @@
 #    By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 15:50:04 by yhwang            #+#    #+#              #
-#    Updated: 2023/09/24 16:06:06 by yhwang           ###   ########.fr        #
+#    Updated: 2023/09/25 19:29:27 by yhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ YELLOW		:= $(shell tput -Txterm setaf 3)
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3#-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 LIBFT_DIR = ./libft
