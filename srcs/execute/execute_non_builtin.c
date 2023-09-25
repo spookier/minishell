@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:42:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 15:13:11 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/25 19:32:02 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	execute_non_builtin(t_data *cmd, char *cmd_with_path, char **env)
 	stat(cmd->command, &buf);
 	if (S_ISDIR(buf.st_mode))
 	{
-		stderr_msg("minishell: Is a directory\n"); 
+		stderr_msg("minishell: Is a directory\n");
 		exit(127);
 	}
 }
