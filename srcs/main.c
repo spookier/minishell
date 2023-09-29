@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:37 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 15:26:38 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/29 01:32:08 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	signal_handler(int signo)
 	{
 		if (pid == CHILD)
 			printf("Quit\n");
+		g_exit_code = 131;	
 	}
 }
 
