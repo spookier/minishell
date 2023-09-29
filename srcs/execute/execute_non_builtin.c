@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 03:42:57 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/25 19:32:02 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/29 03:35:20 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	non_builtin(t_data *cmd, char **env)
 {
 	char	*cmd_with_path;
 
+	if (!cmd->command[0])
+		return ;
 	cmd_with_path = find_cmd_path(cmd, env);
 	if (!cmd_with_path)
 	{
@@ -106,5 +108,5 @@ void	non_builtin(t_data *cmd, char **env)
 		cmd->exit = 127;
 		return ;
 	}
-	execute_non_builtin(cmd, cmd_with_path, env);
+	execute_non_builtin(cmd, cmd_with_path, env);		
 }

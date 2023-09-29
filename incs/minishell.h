@@ -6,7 +6,7 @@
 /*   By: yhwang <yhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 15:52:50 by yhwang            #+#    #+#             */
-/*   Updated: 2023/09/24 16:41:18 by yhwang           ###   ########.fr       */
+/*   Updated: 2023/09/29 03:25:24 by yhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,15 @@ int			token_semicolon_err(void);
 int			token_backslash_err(void);
 
 /* parse_pos_error.c */
-void		convert_line(char *line);
-void		pos_err_msg(int flag);
-int			check_pos_err(char *line, int *flag, int i);
 char		*copy_line(char *line);
+void		convert_line(char *line);
 int			pos_err(char *line);
+
+/* parse_pos_error_check.c */
+void		pos_err_msg(int flag);
+void		set_pos_flag(char *line, int *flag, int *i);
+int			check_pos_flag(char *line, int *flag, int *i);
+int			check_pos_err(char *line, int *flag, int *i);
 
 /* parse_make_new_line.c */
 void		remove_dollar(char *line);
@@ -133,10 +137,11 @@ char		*env_check_value(char **env, char *line, int *start, int end);
 char		*env_var_convert_line(char **env, char *line, int *i);
 
 /* parse_fill_cmd_struct.c */
-void		revert_cmd(t_data **cmd);
 int			is_redir(char *str);
+void		fill_command(t_data **cmd, char **split_cmd, int cmd_i);
 void		fill_option(t_data **cmd,
 				char *each_cmd, char **split_cmd, int cmd_i);
+void		revert_cmd(t_data **cmd);
 t_data		**fill_cmd_struct(t_data **cmd, char *each_cmd, int cmd_i);
 
 /* parse_fill_cmd_check_redir.c */
