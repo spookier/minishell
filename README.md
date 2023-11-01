@@ -29,3 +29,5 @@ Launch the shell by executing the minishell binary:
 ./minishell
 ```
 Now you can start entering commands. To exit the shell, use the exit command or press CTRL+D
+
+![image](https://github.com/spookier/minishell/assets/77325667/aea12041-d081-49d6-9750-72792e6cb4c1)
