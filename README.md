@@ -5,7 +5,7 @@ This project aims to create a simple UNIX shell from scratch to deepen the under
 The creation of minishell was a journey filled with challenges, learning, and growth...  
 The project demanded a deep dive into the underpinnings of UNIX systems and an understanding of how shells operate at a fundamental level  
 
-Due to the complexity of this level, this project was coded along with [@sleepychloe](https://github.com/sleepychloe)
+Due to the level of complexity of this project, this project was coded along with [@sleepychloe](https://github.com/sleepychloe)
 
 ## Features
 - Basic shell functionality: executing commands, navigating directories
